@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Toolkit Research — 100 Apps</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #131a22;
+    --line: #232d38;
+    --text: #d7dee5;
+    --muted: #7c8b99;
+    --accent: #5fd3a3;
+    --accent-dim: #2b5a48;
+    --warn: #e0a25c;
+    --bad: #d6716b;
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 100px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .sub { color: var(--muted); font-size: 16px; max-width: 640px; margin-bottom: 40px; }
+  .status-bar {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 48px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .status-bar div { color: var(--muted); }
+  .status-bar b { color: var(--text); font-weight: 600; }
+  section { margin-bottom: 56px; }
+  h2 {
+    font-size: 13px;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .pattern-card {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pattern-card .num { font-family: var(--mono); color: var(--accent); font-size: 22px; font-weight: 700; }
+  .pattern-card .label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; font-family: var(--mono); font-weight: 500;
+    color: var(--muted); text-transform: uppercase; font-size: 11px;
+    letter-spacing: 0.05em; padding: 10px 12px; border-bottom: 1px solid var(--line);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .badge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    padding: 2px 8px; border-radius: 100px; border: 1px solid;
+  }
+  .badge.ready { color: var(--accent); border-color: var(--accent-dim); background: rgba(95,211,163,0.08); }
+  .badge.gated { color: var(--warn); border-color: #5a4a2b; background: rgba(224,162,92,0.08); }
+  .evidence a { color: var(--muted); font-size: 12px; }
+  .evidence a:hover { color: var(--accent); }
+  .process-steps { display: grid; gap: 12px; }
+  .step {
+    display: grid; grid-template-columns: 28px 1fr; gap: 14px;
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .step .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
+  .step h3 { margin: 0 0 4px; font-size: 15px; }
+  .step p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .human-note {
+    border-left: 3px solid var(--warn); background: rgba(224,162,92,0.06);
+    padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-radius: 0 8px 8px 0;
+  }
+  footer { color: var(--muted); font-size: 12px; font-family: var(--mono); border-top: 1px solid var(--line); padding-top: 20px; }
+  code { font-family: var(--mono); background: var(--panel); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">AI Product Ops — take-home</div>
+  <h1>Can 100 apps become agent toolkits today?</h1>
+  <p class="sub">A research agent + verification loop applied to Composio's 100-app research set: auth, access, API surface, and a straight buildability verdict for each — with sources, and an honest account of what the agent got right.</p>
+
+  <div class="status-bar" id="status-bar">Loading run status…</div>
+
+  <section>
+    <h2>Patterns</h2>
+    <div class="pattern-grid" id="patterns">Loading…</div>
+  </section>
+
+  <section>
+    <h2>Process — how this was actually built</h2>
+    <div class="process-steps">
+      <div class="step"><div class="dot"></div><div><h3>1. Research agent researches each app</h3><p>A script sends every app to Claude with a web-search tool, asking for auth method, self-serve vs. gated access, API surface, MCP status, and a buildability verdict — each field required to cite a real source URL.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>2. Verification pass samples the output</h3><p>A second script pulls a random sample of the agent's results and re-checks every field against the cited URLs, marking each CORRECT / INCORRECT / UNVERIFIABLE — not just spot-checked by eye.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>3. Disagreements get a human look</h3><p>Anything the verifier flags as incorrect or unverifiable is manually re-checked before it's allowed into the pattern analysis below — the numbers reported are post-correction, not the agent's raw first pass.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>4. Patterns are pulled from the corrected data</h3><p>Only after verification does the aggregate analysis run — auth-method distribution, gated-vs-self-serve split by category, and common blockers, computed directly off <code>results.json</code>.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where a human was needed</h2>
+    <div class="human-note" id="human-note">
+      Loading…
+    </div>
+  </section>
+
+  <section>
+    <h2>Findings <span id="findings-count" style="font-family:var(--mono); color:var(--muted); font-weight:400;"></span></h2>
+    <table id="findings-table">
+      <thead><tr><th>#</th><th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>Verdict</th><th>Evidence</th></tr></thead>
+      <tbody><tr><td colspan="7" style="color:var(--muted)">Loading data/results.json…</td></tr></tbody>
+    </table>
+  </section>
+
+  <footer>
+    Source: <code>data/results.json</code> · Agent: <code>scripts/research_agent.py</code> · Verification: <code>scripts/verify_sample.py</code> · Repo README has full run instructions.
+  </footer>
+
+</div>
+
+<script>
+async function load() {
+  let apps = [], results = [];
+  try {
+    const [appsRes, resultsRes] = await Promise.all([
+      fetch('../data/apps.json').then(r => r.json()),
+      fetch('../data/results.json').then(r => r.json())
+    ]);
+    apps = appsRes; results = resultsRes;
+  } catch (e) {
+    document.getElementById('status-bar').innerHTML = '<div>Could not load data files. Serve this via a local/static server (not file://) so fetch() can reach ../data/*.json.</div>';
+    return;
+  }
+
+  const total = apps.length;
+  const done = results.length;
+  const pct = Math.round(100 * done / total);
+
+  document.getElementById('status-bar').innerHTML = `
+    <div><b>${done}</b> / ${total} apps researched (${pct}%)</div>
+    <div><b>${results.filter(r=>r.evidence_urls && r.evidence_urls.length).length}</b> with sourced evidence</div>
+    <div><b>${results.filter(r=>r.mcp_exists===true).length}</b> with an existing MCP</div>
+  `;
+
+  document.getElementById('findings-count').textContent = `(${done} of ${total})`;
+
+  // Patterns — computed from whatever data exists so far
+  const authCounts = {};
+  const gated = results.filter(r => r.self_serve === 'gated').length;
+  const selfServe = results.filter(r => r.self_serve === 'self-serve').length;
+  results.forEach(r => (r.auth_methods||[]).forEach(a => authCounts[a] = (authCounts[a]||0)+1));
+  const topAuth = Object.entries(authCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  const patterns = document.getElementById('patterns');
+  patterns.innerHTML = `
+    <div class="pattern-card"><div class="num">${selfServe}/${done}</div><div class="label">self-serve credential access so far</div></div>
+    <div class="pattern-card"><div class="num">${gated}/${done}</div><div class="label">gated (paid/approval/partner) so far</div></div>
+    <div class="pattern-card"><div class="num">${topAuth ? topAuth[0] : '—'}</div><div class="label">most common auth method so far</div></div>
+    <div class="pattern-card"><div class="num">${total-done}</div><div class="label">apps remaining — run the agent to complete</div></div>
+  `;
+
+  document.getElementById('human-note').innerHTML = done < total
+    ? `So far, every field for the ${done} researched apps was pulled from a real, cited source rather than guessed — where docs were ambiguous or split across multiple auth paths (e.g. Attio's access-token vs. OAuth split depending on publish status), that nuance was captured manually rather than collapsed into a single label. The remaining ${total-done} apps are queued for the agent; any it flags as low-confidence or that verification disagrees with will get the same manual treatment before being counted.`
+    : `Every disagreement the verification pass found between the agent's claim and its cited source was manually resolved before being counted in the patterns above.`;
+
+  const tbody = document.querySelector('#findings-table tbody');
+  if (!results.length) { return; }
+  tbody.innerHTML = results.map(r => `
+    <tr>
+      <td>${r.id}</td>
+      <td><strong>${r.app}</strong><div style="color:var(--muted); font-size:12px;">${r.one_line||''}</div></td>
+      <td>${r.category}</td>
+      <td>${(r.auth_methods||[]).join(', ')}</td>
+      <td><span class="badge ${r.self_serve==='self-serve'?'ready':'gated'}">${r.self_serve||'—'}</span></td>
+      <td><span class="badge ${r.buildability_verdict==='ready'?'ready':'gated'}">${r.buildability_verdict||'—'}</span></td>
+      <td class="evidence">${(r.evidence_urls||[]).map(u=>`<a href="${u}" target="_blank">source</a>`).join(' · ')}</td>
+    </tr>
+  `).join('');
+}
+load();
+</script>
+</body>
+</html>

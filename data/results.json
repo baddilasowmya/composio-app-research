@@ -1,0 +1,71 @@
+[
+  {
+    "id": 1,
+    "app": "Salesforce",
+    "category": "CRM and Sales",
+    "hint": "salesforce.com",
+    "one_line": "Enterprise CRM platform for sales, service, and marketing data.",
+    "auth_methods": ["OAuth2 (Connected App)"],
+    "self_serve": "self-serve",
+    "api_surface": "Broad, mature REST (and SOAP) API covering nearly all CRM objects; requires creating a 'Connected App' to get a Consumer Key/Secret, then OAuth2 flow for tokens.",
+    "mcp_exists": "unclear",
+    "buildability_verdict": "ready",
+    "blocker": "",
+    "evidence_urls": [
+      "https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_oauth_and_connected_apps.htm",
+      "https://developer.salesforce.com/docs/platform/connect-rest-api/guide/quickstart_dev_org.html"
+    ]
+  },
+  {
+    "id": 2,
+    "app": "HubSpot",
+    "category": "CRM and Sales",
+    "hint": "hubspot.com",
+    "one_line": "CRM and marketing/sales/service platform with a broad public API.",
+    "auth_methods": ["Private App static token", "OAuth2 (for public/multi-portal apps)"],
+    "self_serve": "self-serve",
+    "api_surface": "Broad REST API; Private App tokens are simplest (no expiry, single portal), OAuth2 required for apps installed across many portals/Marketplace listing.",
+    "mcp_exists": "unclear",
+    "buildability_verdict": "ready",
+    "blocker": "",
+    "evidence_urls": [
+      "https://developers.hubspot.com/blog/hubspot-integration-choosing-private-public-hubspot-apps",
+      "https://sfailabs.com/guides/how-to-get-hubspot-api-key"
+    ]
+  },
+  {
+    "id": 3,
+    "app": "Pipedrive",
+    "category": "CRM and Sales",
+    "hint": "pipedrive.com",
+    "one_line": "Sales-pipeline-focused CRM with a developer-friendly REST API.",
+    "auth_methods": ["API token (static)", "OAuth2 (required for Marketplace apps)"],
+    "self_serve": "self-serve",
+    "api_surface": "REST API v1/v2, resource-based (/deals, /persons, /organizations); free developer account available; simple static API token for internal use, OAuth2 required only for public Marketplace apps.",
+    "mcp_exists": "unclear",
+    "buildability_verdict": "ready",
+    "blocker": "",
+    "evidence_urls": [
+      "https://pipedrive.readme.io/docs/core-api-concepts-authentication",
+      "https://apitracker.io/a/pipedrive"
+    ]
+  },
+  {
+    "id": 4,
+    "app": "Attio",
+    "category": "CRM and Sales",
+    "hint": "attio.com",
+    "one_line": "Modern, data-model-flexible CRM with REST API and OAuth-based MCP.",
+    "auth_methods": ["Access token (Bearer, workspace-scoped)", "OAuth2 (for published integrations / MCP)"],
+    "self_serve": "self-serve",
+    "api_surface": "Public REST API with published OpenAPI spec; official MCP server exists with OAuth-based user-scoped auth for agent-driven workflows.",
+    "mcp_exists": true,
+    "buildability_verdict": "ready",
+    "blocker": "",
+    "evidence_urls": [
+      "https://docs.attio.com/rest-api/overview",
+      "https://attio.com/platform/developers",
+      "https://github.com/api-evangelist/attio"
+    ]
+  }
+]
