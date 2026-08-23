@@ -78,8 +78,9 @@ IMPORTANT RESEARCH RULES:
 - Base your answer on the page text given to you. Do not invent facts not supported by it.
 - Never invent an evidence URL -- only cite the URL you were actually given, or one you found
   yourself if you were told to search.
-- If a fact isn't covered by what you were given, use "unclear" (or an empty list/string)
-  rather than guessing.
+- If a fact isn't covered by what you were given: for string fields use "unclear"; for LIST
+  fields (auth_methods, api_protocols) use ["unclear"] -- never an empty list, every list field
+  must contain at least one item.
 - Composio's own toolkit catalog has already been checked for this app (given to you in the
   prompt) -- treat that as ground truth for whether Composio has a first-party toolkit already;
   don't re-derive it.
