@@ -153,7 +153,7 @@ class LLMProvider:
             self.kind = "groq"
             from groq import Groq
             self.client = Groq(api_key=os.environ["GROQ_API_KEY"], default_headers={"Groq-Model-Version": "latest"})
-            self.model = "llama-3.3-70b-versatile"       # cheap/fast for extraction-from-text
+            self.model = "openai/gpt-oss-120b"           # cheap/fast for extraction-from-text
             self.search_model = "groq/compound"           # only used for the search fallback
         elif os.environ.get("ANTHROPIC_API_KEY"):
             self.kind = "anthropic"
