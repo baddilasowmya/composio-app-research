@@ -1,3 +1,14 @@
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Only ONE of these is required -- install whichever matches the key you have.
+# research_agent.py auto-detects which key is set (checked in this order:
+# GROQ_API_KEY, ANTHROPIC_API_KEY, OPENROUTER_API_KEY) and uses that provider.
 groq>=0.11.0
-composio>=1.0.0
+anthropic>=0.40.0
+openai>=1.50.0
+
+# Optional -- enables the first-party Composio toolkit-catalog check
+composio==1.0.0rc10
+
 pytest>=8.0.0
