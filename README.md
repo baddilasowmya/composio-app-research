@@ -13,9 +13,10 @@ enforces that: it fails loudly if any record is missing fields, has an
 unresolved error, or lacks evidence, and it reports current coverage honestly
 rather than claiming 100/100 when it isn't.
 
-Reaching 100/100 requires running `scripts/research_agent.py` with an
-`ANTHROPIC_API_KEY` (and ideally a `COMPOSIO_API_KEY` — see below). That takes
-about 15–25 minutes once you have keys. See **Running it** below.
+Reaching 100/100 requires running `scripts/research_agent.py` with a
+`GROQ_API_KEY` (free tier is enough — and ideally a `COMPOSIO_API_KEY` too,
+see below). That takes about 15–25 minutes once you have keys. See
+**Running it** below.
 
 ## What this is
 
@@ -32,7 +33,7 @@ sample against those sources and reports honest before/after accuracy.
         ↓
 Composio toolkit-catalog check   ← composio.toolkits.get(slug=...), first-party evidence
         ↓
-Claude + web_search fills remaining fields, cites a URL per field
+groq/compound + built-in web search fills remaining fields, cites a URL per field
         ↓
 Schema + evidence validation (retries on failure, exponential backoff)
         ↓
@@ -55,7 +56,7 @@ Not just installed and left unused. `scripts/research_agent.py` calls
 for every app, *before* any web research happens. If Composio already ships a
 toolkit for an app, that's first-party proof the app is agent-callable today —
 authoritative evidence from Composio's own platform, not an LLM inference.
-That result is fed into the research prompt so Claude doesn't need to
+That result is fed into the research prompt so the model doesn't need to
 re-derive what Composio's own SDK already knows; it only researches the
 narrower fields the catalog can't answer (specific auth flow, self-serve vs.
 gated, API breadth). See the docstring at the top of `research_agent.py` for
@@ -106,7 +107,7 @@ and post-correction accuracy.
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env   # fill in ANTHROPIC_API_KEY (required) and COMPOSIO_API_KEY (recommended)
+cp .env.example .env   # fill in GROQ_API_KEY (required, free tier) and COMPOSIO_API_KEY (recommended)
 export $(cat .env | xargs)
 
 python scripts/research_agent.py              # researches all apps not yet in results.json
@@ -135,7 +136,7 @@ data/
   verification.json   sampled verification audit trail + accuracy
   patterns.json       computed cross-app patterns (regenerated from results.json)
 scripts/
-  research_agent.py    Composio catalog check + Claude/web_search research
+  research_agent.py    Composio catalog check + groq/compound web-search research
   verify_sample.py      field-level fact-check against cited sources
   validate_results.py   quality gate / CI check
   analyze_patterns.py    pattern computation

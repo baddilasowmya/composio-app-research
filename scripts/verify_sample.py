@@ -1,6 +1,6 @@
 """
-Verification pass (v2)
-------------------------
+Verification pass (v3 -- Groq backend)
+-----------------------------------------
 Samples N apps (fixed random seed -> reproducible sample) from results.json,
 re-checks each field against its OWN cited evidence URL (field-level, not
 one blob of URLs), and records a per-field audit trail:
@@ -8,8 +8,10 @@ one blob of URLs), and records a per-field audit trail:
   {app, field, agent_claim, source, verdict, reason, corrected_value}
 
 Writes data/verification.json with the full audit trail plus a summary
-(initial accuracy, corrections applied, final accuracy) -- not just a
-single percentage.
+(initial accuracy, corrections applied, final accuracy).
+
+Uses groq/compound (same backend as research_agent.py) so the whole
+pipeline runs on one free API key -- no separate Anthropic key needed.
 
 Usage:
   python verify_sample.py --n 25 --seed 42
@@ -23,20 +25,20 @@ import random
 import re
 from pathlib import Path
 
-import anthropic
+from groq import Groq
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 RESULTS_FILE = DATA_DIR / "results.json"
 VERIFY_FILE = DATA_DIR / "verification.json"
 
-MODEL = "claude-sonnet-4-6"
+MODEL = "groq/compound"
 FIELDS_TO_CHECK = ["auth_methods", "credential_access", "api_protocols", "buildability_verdict"]
 
 VERIFY_SYSTEM = """You are a fact-checker. You'll get one claimed field value for an app and the
-URL(s) cited as evidence for it. Fetch the URL(s) and determine whether the source actually
-supports the claim.
+URL(s) cited as evidence for it. Search the web / visit the URL(s) and determine whether the
+source actually supports the claim.
 
-Respond ONLY with JSON:
+Respond ONLY with JSON, no markdown fences:
 {
   "verdict": "CORRECT" | "INCORRECT" | "UNVERIFIABLE",
   "reason": "1-2 sentences",
@@ -48,15 +50,17 @@ Be strict: UNVERIFIABLE if the page is unreachable or genuinely ambiguous, not a
 
 def verify_field(client, app_name, field, claim, urls):
     prompt = f"App: {app_name}\nField: {field}\nClaimed value: {json.dumps(claim)}\nEvidence URL(s): {urls}"
-    resp = client.messages.create(
+    response = client.chat.completions.create(
         model=MODEL,
-        max_tokens=400,
-        system=VERIFY_SYSTEM,
-        messages=[{"role": "user", "content": prompt}],
-        tools=[{"type": "web_search_20250305", "name": "web_search"}],
+        messages=[
+            {"role": "system", "content": VERIFY_SYSTEM},
+            {"role": "user", "content": prompt},
+        ],
+        compound_custom={"tools": {"enabled_tools": ["web_search", "visit_website"]}},
+        temperature=0.1,
+        max_completion_tokens=500,
     )
-    text_blocks = [b.text for b in resp.content if b.type == "text"]
-    raw = text_blocks[-1] if text_blocks else "{}"
+    raw = response.choices[0].message.content or "{}"
     raw = re.sub(r"^```json|```$", "", raw.strip(), flags=re.MULTILINE).strip()
     try:
         return json.loads(raw)
@@ -71,10 +75,10 @@ def main():
     parser.add_argument("--apply-corrections", action="store_true", help="write corrected_value back into results.json")
     args = parser.parse_args()
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        raise SystemExit("Set ANTHROPIC_API_KEY in your environment before running.")
-    client = anthropic.Anthropic(api_key=api_key)
+        raise SystemExit("Set GROQ_API_KEY in your environment before running.")
+    client = Groq(api_key=api_key, default_headers={"Groq-Model-Version": "latest"})
 
     results = json.loads(RESULTS_FILE.read_text())
     if len(results) < args.n:
