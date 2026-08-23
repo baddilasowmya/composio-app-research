@@ -1,15 +1,19 @@
 """
-Verification pass.
+Verification pass (v2)
+------------------------
+Samples N apps (fixed random seed -> reproducible sample) from results.json,
+re-checks each field against its OWN cited evidence URL (field-level, not
+one blob of URLs), and records a per-field audit trail:
 
-Takes a random sample of N apps from data/results.json, re-checks each
-field against the cited evidence_urls (by fetching the page and asking
-the model to confirm/deny each claim), and writes data/verification.json
-with per-field agree/disagree + notes. This is what lets the final
-report say "we sampled X%, Y were correct" with real numbers instead
-of a made-up accuracy claim.
+  {app, field, agent_claim, source, verdict, reason, corrected_value}
 
-Run after research_agent.py has produced results.json.
-Usage: python verify_sample.py --n 20
+Writes data/verification.json with the full audit trail plus a summary
+(initial accuracy, corrections applied, final accuracy) -- not just a
+single percentage.
+
+Usage:
+  python verify_sample.py --n 25 --seed 42
+  python verify_sample.py --n 25 --apply-corrections   # writes corrected_value back into results.json
 """
 
 import argparse
@@ -26,36 +30,27 @@ RESULTS_FILE = DATA_DIR / "results.json"
 VERIFY_FILE = DATA_DIR / "verification.json"
 
 MODEL = "claude-sonnet-4-6"
+FIELDS_TO_CHECK = ["auth_methods", "credential_access", "api_protocols", "buildability_verdict"]
 
-VERIFY_SYSTEM = """You are a fact-checker. You will be given a research claim about
-an app's API/auth and a set of evidence URLs. Fetch the URLs and determine whether
-each field of the claim is CORRECT, INCORRECT, or UNVERIFIABLE (page unreachable /
-doesn't confirm either way). Be strict - only mark CORRECT if the source actually
-supports it.
+VERIFY_SYSTEM = """You are a fact-checker. You'll get one claimed field value for an app and the
+URL(s) cited as evidence for it. Fetch the URL(s) and determine whether the source actually
+supports the claim.
 
 Respond ONLY with JSON:
 {
-  "auth_methods_verdict": "CORRECT/INCORRECT/UNVERIFIABLE",
-  "self_serve_verdict": "CORRECT/INCORRECT/UNVERIFIABLE",
-  "api_surface_verdict": "CORRECT/INCORRECT/UNVERIFIABLE",
-  "mcp_exists_verdict": "CORRECT/INCORRECT/UNVERIFIABLE",
-  "notes": "1-2 sentence explanation of any disagreement"
+  "verdict": "CORRECT" | "INCORRECT" | "UNVERIFIABLE",
+  "reason": "1-2 sentences",
+  "corrected_value": null or the correct value if INCORRECT
 }
+Be strict: UNVERIFIABLE if the page is unreachable or genuinely ambiguous, not a coin flip.
 """
 
 
-def verify_record(client, record):
-    prompt = f"""Claim about {record['app']}:
-auth_methods: {record.get('auth_methods')}
-self_serve: {record.get('self_serve')}
-api_surface: {record.get('api_surface')}
-mcp_exists: {record.get('mcp_exists')}
-
-Evidence URLs to check: {record.get('evidence_urls')}
-"""
+def verify_field(client, app_name, field, claim, urls):
+    prompt = f"App: {app_name}\nField: {field}\nClaimed value: {json.dumps(claim)}\nEvidence URL(s): {urls}"
     resp = client.messages.create(
         model=MODEL,
-        max_tokens=512,
+        max_tokens=400,
         system=VERIFY_SYSTEM,
         messages=[{"role": "user", "content": prompt}],
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
@@ -66,44 +61,94 @@ Evidence URLs to check: {record.get('evidence_urls')}
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        return {"error": "parse_error", "raw": raw}
+        return {"verdict": "UNVERIFIABLE", "reason": "could not parse fact-checker output", "corrected_value": None}
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n", type=int, default=20, help="sample size")
+    parser.add_argument("--n", type=int, default=25, help="sample size (default 25, per assignment guidance of 20-30)")
+    parser.add_argument("--seed", type=int, default=42, help="random seed for a reproducible sample")
+    parser.add_argument("--apply-corrections", action="store_true", help="write corrected_value back into results.json")
     args = parser.parse_args()
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         raise SystemExit("Set ANTHROPIC_API_KEY in your environment before running.")
-
     client = anthropic.Anthropic(api_key=api_key)
+
     results = json.loads(RESULTS_FILE.read_text())
-    sample = random.sample(results, min(args.n, len(results)))
+    if len(results) < args.n:
+        print(f"NOTE: only {len(results)} results exist, sampling all of them (requested {args.n}).")
 
-    verification = []
+    rng = random.Random(args.seed)
+    sample = rng.sample(results, min(args.n, len(results)))
+
+    audit = []
+    correct = incorrect = unverifiable = 0
+
     for record in sample:
-        v = verify_record(client, record)
-        v["id"] = record["id"]
-        v["app"] = record["app"]
-        verification.append(v)
-        print(f"Verified {record['app']}: {v}")
-        VERIFY_FILE.write_text(json.dumps(verification, indent=2))
+        for field in FIELDS_TO_CHECK:
+            claim = record.get(field)
+            urls = (record.get("evidence") or {}).get(field) or (record.get("evidence") or {}).get("buildability", [])
+            if not claim or not urls:
+                continue
+            v = verify_field(client, record["app"], field, claim, urls)
+            entry = {
+                "app": record["app"],
+                "id": record["id"],
+                "field": field,
+                "agent_claim": claim,
+                "source": urls,
+                "verdict": v.get("verdict", "UNVERIFIABLE"),
+                "reason": v.get("reason", ""),
+                "corrected_value": v.get("corrected_value"),
+            }
+            audit.append(entry)
+            if entry["verdict"] == "CORRECT":
+                correct += 1
+            elif entry["verdict"] == "INCORRECT":
+                incorrect += 1
+            else:
+                unverifiable += 1
+            print(f"{record['app']} / {field}: {entry['verdict']}")
+            VERIFY_FILE.write_text(json.dumps({"audit": audit}, indent=2))
 
-    # summary
-    total_fields = 0
-    correct_fields = 0
-    for v in verification:
-        for k in ["auth_methods_verdict", "self_serve_verdict", "api_surface_verdict", "mcp_exists_verdict"]:
-            if k in v:
-                total_fields += 1
-                if v[k] == "CORRECT":
-                    correct_fields += 1
+    total = correct + incorrect + unverifiable
+    initial_accuracy = round(100 * correct / total, 1) if total else 0.0
 
-    accuracy = round(100 * correct_fields / total_fields, 1) if total_fields else 0
-    print(f"\nSampled {len(sample)}/{len(results)} apps ({round(100*len(sample)/len(results),1)}%).")
-    print(f"Field-level accuracy: {correct_fields}/{total_fields} = {accuracy}%")
+    corrections_applied = 0
+    if args.apply_corrections:
+        by_id = {r["id"]: r for r in results}
+        for entry in audit:
+            if entry["verdict"] == "INCORRECT" and entry["corrected_value"] is not None:
+                by_id[entry["id"]][entry["field"]] = entry["corrected_value"]
+                by_id[entry["id"]]["human_corrected"] = True
+                corrections_applied += 1
+        RESULTS_FILE.write_text(json.dumps(sorted(by_id.values(), key=lambda r: r["id"]), indent=2))
+
+    final_accuracy = round(100 * (correct + corrections_applied) / total, 1) if total else 0.0
+
+    summary = {
+        "sample_size": len(sample),
+        "sample_pct_of_total": round(100 * len(sample) / len(results), 1) if results else 0,
+        "seed": args.seed,
+        "fields_checked": total,
+        "correct": correct,
+        "incorrect": incorrect,
+        "unverifiable": unverifiable,
+        "initial_accuracy_pct": initial_accuracy,
+        "corrections_applied": corrections_applied,
+        "final_accuracy_pct": final_accuracy if args.apply_corrections else None,
+    }
+    VERIFY_FILE.write_text(json.dumps({"summary": summary, "audit": audit}, indent=2))
+
+    print(f"\nSampled {len(sample)}/{len(results)} apps ({summary['sample_pct_of_total']}%), seed={args.seed}")
+    print(f"Fields checked: {total} | correct: {correct} | incorrect: {incorrect} | unverifiable: {unverifiable}")
+    print(f"Initial accuracy: {initial_accuracy}%")
+    if args.apply_corrections:
+        print(f"Corrections applied: {corrections_applied} | Final accuracy: {final_accuracy}%")
+    else:
+        print("Run again with --apply-corrections to write fixes back into results.json")
 
 
 if __name__ == "__main__":

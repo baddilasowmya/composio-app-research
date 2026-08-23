@@ -6,105 +6,69 @@
 <title>Agent Toolkit Research — 100 Apps</title>
 <style>
   :root {
-    --bg: #0d1117;
-    --panel: #131a22;
-    --line: #232d38;
-    --text: #d7dee5;
-    --muted: #7c8b99;
-    --accent: #5fd3a3;
-    --accent-dim: #2b5a48;
-    --warn: #e0a25c;
-    --bad: #d6716b;
+    --bg: #0d1117; --panel: #131a22; --line: #232d38;
+    --text: #d7dee5; --muted: #7c8b99;
+    --accent: #5fd3a3; --accent-dim: #2b5a48;
+    --warn: #e0a25c; --warn-dim: #5a4a2b;
+    --bad: #d6716b; --bad-dim: #5a2f2c;
     --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
     --sans: 'Inter', -apple-system, sans-serif;
   }
   * { box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    margin: 0;
-    line-height: 1.55;
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); margin: 0; line-height: 1.55; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 24px 100px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .sub { color: var(--muted); font-size: 16px; max-width: 680px; margin-bottom: 36px; }
+  .coverage-banner {
+    border: 1px solid var(--warn-dim); background: rgba(224,162,92,0.07);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 40px;
+    font-family: var(--mono); font-size: 13px; color: var(--warn);
   }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 100px; }
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-  h1 {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0 0 12px;
-  }
-  .sub { color: var(--muted); font-size: 16px; max-width: 640px; margin-bottom: 40px; }
-  .status-bar {
-    display: flex; gap: 24px; flex-wrap: wrap;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin-bottom: 48px;
-    font-family: var(--mono);
-    font-size: 13px;
-  }
-  .status-bar div { color: var(--muted); }
-  .status-bar b { color: var(--text); font-weight: 600; }
+  .coverage-banner.done { border-color: var(--accent-dim); background: rgba(95,211,163,0.07); color: var(--accent); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 48px; }
+  .stat-card { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 16px 18px; }
+  .stat-card .num { font-family: var(--mono); color: var(--accent); font-size: 26px; font-weight: 700; }
+  .stat-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
   section { margin-bottom: 56px; }
-  h2 {
-    font-size: 13px;
-    font-family: var(--mono);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-  .pattern-card {
-    border: 1px solid var(--line);
-    background: var(--panel);
-    border-radius: 10px;
-    padding: 18px 20px;
-  }
-  .pattern-card .num { font-family: var(--mono); color: var(--accent); font-size: 22px; font-weight: 700; }
-  .pattern-card .label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  h2 { font-size: 13px; font-family: var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 20px; }
+  ul.findings { margin: 0; padding-left: 20px; }
+  ul.findings li { margin-bottom: 8px; font-size: 14.5px; }
+  .process-steps { display: grid; gap: 10px; }
+  .step { display: grid; grid-template-columns: 24px 1fr; gap: 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 14px 16px; }
+  .step .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
+  .step h3 { margin: 0 0 3px; font-size: 14px; }
+  .step p { margin: 0; color: var(--muted); font-size: 13px; }
+  .bar-row { display: grid; grid-template-columns: 160px 1fr 50px; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 8px; }
+  .bar-row .name { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  .bar-track { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--accent); border-radius: 5px; }
+  .bar-fill.warn { background: var(--warn); }
+  .bar-row .val { text-align: right; font-family: var(--mono); color: var(--muted); font-size: 12px; }
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 700px) { .chart-grid { grid-template-columns: 1fr; } }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    text-align: left; font-family: var(--mono); font-weight: 500;
-    color: var(--muted); text-transform: uppercase; font-size: 11px;
-    letter-spacing: 0.05em; padding: 10px 12px; border-bottom: 1px solid var(--line);
-  }
+  th { text-align: left; font-family: var(--mono); font-weight: 500; color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: .05em; padding: 10px 12px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--bg); }
   td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tr:hover td { background: rgba(255,255,255,0.02); }
-  .badge {
-    display: inline-block; font-family: var(--mono); font-size: 11px;
-    padding: 2px 8px; border-radius: 100px; border: 1px solid;
-  }
-  .badge.ready { color: var(--accent); border-color: var(--accent-dim); background: rgba(95,211,163,0.08); }
-  .badge.gated { color: var(--warn); border-color: #5a4a2b; background: rgba(224,162,92,0.08); }
-  .evidence a { color: var(--muted); font-size: 12px; }
+  .badge { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 100px; border: 1px solid; white-space: nowrap; }
+  .badge.ready { color: var(--accent); border-color: var(--accent-dim); background: rgba(95,211,163,.08); }
+  .badge.partial { color: var(--warn); border-color: var(--warn-dim); background: rgba(224,162,92,.08); }
+  .badge.blocked { color: var(--bad); border-color: var(--bad-dim); background: rgba(214,113,107,.08); }
+  .evidence a { color: var(--muted); font-size: 12px; margin-right: 6px; }
   .evidence a:hover { color: var(--accent); }
-  .process-steps { display: grid; gap: 12px; }
-  .step {
-    display: grid; grid-template-columns: 28px 1fr; gap: 14px;
-    border: 1px solid var(--line); background: var(--panel);
-    border-radius: 10px; padding: 16px 18px;
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .controls input, .controls select {
+    background: var(--panel); border: 1px solid var(--line); color: var(--text);
+    border-radius: 6px; padding: 8px 12px; font-family: var(--sans); font-size: 13px;
   }
-  .step .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
-  .step h3 { margin: 0 0 4px; font-size: 15px; }
-  .step p { margin: 0; color: var(--muted); font-size: 13.5px; }
-  .human-note {
-    border-left: 3px solid var(--warn); background: rgba(224,162,92,0.06);
-    padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-radius: 0 8px 8px 0;
-  }
+  .controls input { flex: 1; min-width: 200px; }
+  .table-wrap { max-height: 560px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; }
+  .table-wrap table { font-size: 12.5px; }
+  .human-note { border-left: 3px solid var(--warn); background: rgba(224,162,92,.06); padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-radius: 0 8px 8px 0; }
+  .limitations li { color: var(--muted); font-size: 13.5px; margin-bottom: 6px; }
   footer { color: var(--muted); font-size: 12px; font-family: var(--mono); border-top: 1px solid var(--line); padding-top: 20px; }
-  code { font-family: var(--mono); background: var(--panel); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+  code { font-family: var(--mono); background: var(--panel); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -112,104 +76,225 @@
 
   <div class="eyebrow">AI Product Ops — take-home</div>
   <h1>Can 100 apps become agent toolkits today?</h1>
-  <p class="sub">A research agent + verification loop applied to Composio's 100-app research set: auth, access, API surface, and a straight buildability verdict for each — with sources, and an honest account of what the agent got right.</p>
+  <p class="sub">A research agent + verification loop applied to Composio's 100-app research set: auth, access, API surface, and a buildability verdict for each — with per-field sources, a Composio-toolkit-catalog cross-check, and an honest verification pass.</p>
 
-  <div class="status-bar" id="status-bar">Loading run status…</div>
+  <div class="coverage-banner" id="coverage-banner">Loading run status…</div>
 
   <section>
-    <h2>Patterns</h2>
-    <div class="pattern-grid" id="patterns">Loading…</div>
+    <h2>Executive summary</h2>
+    <div class="stat-grid" id="stat-grid"></div>
+    <ul class="findings" id="key-findings"><li>Loading…</li></ul>
   </section>
 
   <section>
-    <h2>Process — how this was actually built</h2>
+    <h2>Methodology</h2>
     <div class="process-steps">
-      <div class="step"><div class="dot"></div><div><h3>1. Research agent researches each app</h3><p>A script sends every app to Claude with a web-search tool, asking for auth method, self-serve vs. gated access, API surface, MCP status, and a buildability verdict — each field required to cite a real source URL.</p></div></div>
-      <div class="step"><div class="dot"></div><div><h3>2. Verification pass samples the output</h3><p>A second script pulls a random sample of the agent's results and re-checks every field against the cited URLs, marking each CORRECT / INCORRECT / UNVERIFIABLE — not just spot-checked by eye.</p></div></div>
-      <div class="step"><div class="dot"></div><div><h3>3. Disagreements get a human look</h3><p>Anything the verifier flags as incorrect or unverifiable is manually re-checked before it's allowed into the pattern analysis below — the numbers reported are post-correction, not the agent's raw first pass.</p></div></div>
-      <div class="step"><div class="dot"></div><div><h3>4. Patterns are pulled from the corrected data</h3><p>Only after verification does the aggregate analysis run — auth-method distribution, gated-vs-self-serve split by category, and common blockers, computed directly off <code>results.json</code>.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>1. Composio catalog check (first-party)</h3><p><code>composio.toolkits.get(slug=...)</code> checks Composio's own toolkit catalog for each app before any research — if a toolkit already exists, that's authoritative proof of buildability straight from the platform, not an inference.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>2. Agent research (Claude + web search)</h3><p>Fills the fields the catalog can't answer — auth flow, self-serve vs. gated, API breadth — with a required source URL per field. Schema and evidence validation retries failures with backoff.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>3. Verification sample</h3><p>A reproducible random sample (fixed seed) is re-checked field-by-field against its own cited source, logged CORRECT / INCORRECT / UNVERIFIABLE with a full audit trail.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>4. Human correction</h3><p>Confirmed errors are corrected and flagged <code>human_corrected</code> before being counted in the patterns below — the reported accuracy is post-correction, not the agent's raw first pass.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>5. Pattern analysis</h3><p>Computed directly from the corrected dataset — category-level claims only render when enough apps in a category have been researched to support them.</p></div></div>
     </div>
+  </section>
+
+  <section>
+    <h2>Authentication &amp; access</h2>
+    <div class="chart-grid">
+      <div><div id="auth-chart"></div></div>
+      <div><div id="access-chart"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>MCP / Composio toolkit landscape</h2>
+    <div id="mcp-chart"></div>
+  </section>
+
+  <section>
+    <h2>Buildability</h2>
+    <div id="buildability-chart"></div>
+  </section>
+
+  <section>
+    <h2>Top blockers</h2>
+    <div id="blockers-chart"><p style="color:var(--muted); font-size:13px;">No blockers logged yet in the researched sample.</p></div>
+  </section>
+
+  <section>
+    <h2>Verification</h2>
+    <div id="verification-summary" class="human-note">Loading…</div>
   </section>
 
   <section>
     <h2>Where a human was needed</h2>
-    <div class="human-note" id="human-note">
-      Loading…
-    </div>
+    <div class="human-note" id="human-note">Loading…</div>
   </section>
 
   <section>
     <h2>Findings <span id="findings-count" style="font-family:var(--mono); color:var(--muted); font-weight:400;"></span></h2>
-    <table id="findings-table">
-      <thead><tr><th>#</th><th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>Verdict</th><th>Evidence</th></tr></thead>
-      <tbody><tr><td colspan="7" style="color:var(--muted)">Loading data/results.json…</td></tr></tbody>
-    </table>
+    <div class="controls">
+      <input id="search-box" placeholder="Search app or category…">
+      <select id="verdict-filter"><option value="">All verdicts</option><option value="ready">Ready</option><option value="partial">Partial</option><option value="blocked">Blocked</option></select>
+      <select id="access-filter"><option value="">All access</option><option value="self-serve">Self-serve</option><option value="gated">Gated</option><option value="unclear">Unclear</option></select>
+    </div>
+    <div class="table-wrap">
+      <table id="findings-table">
+        <thead><tr><th>#</th><th>App</th><th>Category</th><th>Auth</th><th>API</th><th>Composio toolkit</th><th>Access</th><th>Verdict</th><th>Conf.</th><th>Evidence</th></tr></thead>
+        <tbody><tr><td colspan="10" style="color:var(--muted)">Loading data/results.json…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Limitations</h2>
+    <ul class="limitations">
+      <li>APIs and auth requirements change — every record carries a <code>researched_at</code> timestamp.</li>
+      <li>OAuth/approval requirements can vary by account tier even within one app.</li>
+      <li>"Buildable" means publicly documented access existed at research time, not a guarantee Composio has built the toolkit — though the catalog check shows where one already exists.</li>
+      <li>Verification re-checks the sources an app was researched from, not the full space of possible sources.</li>
+      <li>Category-level comparisons only render once enough apps per category are researched to be meaningful — see coverage banner above.</li>
+    </ul>
   </section>
 
   <footer>
-    Source: <code>data/results.json</code> · Agent: <code>scripts/research_agent.py</code> · Verification: <code>scripts/verify_sample.py</code> · Repo README has full run instructions.
+    Source: <code>data/results.json</code> + <code>data/patterns.json</code> · Agent: <code>scripts/research_agent.py</code> (Composio catalog + Claude/web_search) · Verification: <code>scripts/verify_sample.py</code> · Full run instructions in the repo README.
   </footer>
 
 </div>
 
 <script>
+function bar(container, rows, warnIf) {
+  container.innerHTML = rows.map(([label, val, pct]) => `
+    <div class="bar-row">
+      <div class="name">${label}</div>
+      <div class="bar-track"><div class="bar-fill ${warnIf && warnIf(label) ? 'warn' : ''}" style="width:${pct}%"></div></div>
+      <div class="val">${val}</div>
+    </div>
+  `).join('');
+}
+
 async function load() {
-  let apps = [], results = [];
+  let apps = [], results = [], patterns = {}, verification = {};
   try {
-    const [appsRes, resultsRes] = await Promise.all([
+    [apps, results] = await Promise.all([
       fetch('../data/apps.json').then(r => r.json()),
       fetch('../data/results.json').then(r => r.json())
     ]);
-    apps = appsRes; results = resultsRes;
   } catch (e) {
-    document.getElementById('status-bar').innerHTML = '<div>Could not load data files. Serve this via a local/static server (not file://) so fetch() can reach ../data/*.json.</div>';
+    document.getElementById('coverage-banner').textContent =
+      'Could not load data files — serve this via a static server (not file://) so fetch() can reach ../data/*.json.';
     return;
   }
+  try { patterns = await fetch('../data/patterns.json').then(r => r.json()); } catch(e) { patterns = {}; }
+  try { verification = await fetch('../data/verification.json').then(r => r.json()); } catch(e) { verification = {}; }
 
-  const total = apps.length;
-  const done = results.length;
-  const pct = Math.round(100 * done / total);
+  const total = apps.length, done = results.length, pct = Math.round(100 * done / total);
+  const banner = document.getElementById('coverage-banner');
+  if (done >= total) {
+    banner.className = 'coverage-banner done';
+    banner.textContent = `All ${total}/${total} apps researched and validated.`;
+  } else {
+    banner.textContent = `${done} / ${total} apps researched so far (${pct}%). Everything shown below is computed only from these ${done} — nothing is padded or estimated. Run scripts/research_agent.py to complete the rest.`;
+  }
 
-  document.getElementById('status-bar').innerHTML = `
-    <div><b>${done}</b> / ${total} apps researched (${pct}%)</div>
-    <div><b>${results.filter(r=>r.evidence_urls && r.evidence_urls.length).length}</b> with sourced evidence</div>
-    <div><b>${results.filter(r=>r.mcp_exists===true).length}</b> with an existing MCP</div>
+  const access = {}, verdicts = {}, toolkitExists = results.filter(r => (r.composio_catalog||{}).composio_toolkit_exists === true).length;
+  results.forEach(r => {
+    access[r.credential_access] = (access[r.credential_access]||0)+1;
+    verdicts[r.buildability_verdict] = (verdicts[r.buildability_verdict]||0)+1;
+  });
+
+  document.getElementById('stat-grid').innerHTML = `
+    <div class="stat-card"><div class="num">${done}/${total}</div><div class="label">apps researched</div></div>
+    <div class="stat-card"><div class="num">${access['self-serve']||0}</div><div class="label">self-serve (of ${done})</div></div>
+    <div class="stat-card"><div class="num">${access['gated']||0}</div><div class="label">gated (of ${done})</div></div>
+    <div class="stat-card"><div class="num">${verdicts['ready']||0}</div><div class="label">buildable today</div></div>
+    <div class="stat-card"><div class="num">${toolkitExists}</div><div class="label">already have a Composio toolkit</div></div>
+    <div class="stat-card"><div class="num">${(verification.summary && verification.summary.final_accuracy_pct) || (verification.summary && verification.summary.initial_accuracy_pct) || '—'}${verification.summary ? '%' : ''}</div><div class="label">verification accuracy</div></div>
   `;
 
   document.getElementById('findings-count').textContent = `(${done} of ${total})`;
 
-  // Patterns — computed from whatever data exists so far
-  const authCounts = {};
-  const gated = results.filter(r => r.self_serve === 'gated').length;
-  const selfServe = results.filter(r => r.self_serve === 'self-serve').length;
-  results.forEach(r => (r.auth_methods||[]).forEach(a => authCounts[a] = (authCounts[a]||0)+1));
-  const topAuth = Object.entries(authCounts).sort((a,b)=>b[1]-a[1])[0];
+  const findings = document.getElementById('key-findings');
+  findings.innerHTML = (patterns.key_findings && patterns.key_findings.length)
+    ? patterns.key_findings.map(f => `<li>${f}</li>`).join('')
+    : '<li>No patterns computed yet — run scripts/analyze_patterns.py.</li>';
 
-  const patterns = document.getElementById('patterns');
-  patterns.innerHTML = `
-    <div class="pattern-card"><div class="num">${selfServe}/${done}</div><div class="label">self-serve credential access so far</div></div>
-    <div class="pattern-card"><div class="num">${gated}/${done}</div><div class="label">gated (paid/approval/partner) so far</div></div>
-    <div class="pattern-card"><div class="num">${topAuth ? topAuth[0] : '—'}</div><div class="label">most common auth method so far</div></div>
-    <div class="pattern-card"><div class="num">${total-done}</div><div class="label">apps remaining — run the agent to complete</div></div>
-  `;
+  // Auth chart
+  const authCounts = patterns.auth_distribution || {};
+  const authRows = Object.entries(authCounts).sort((a,b)=>b[1]-a[1]).map(([k,v]) => [k, v, done ? Math.round(100*v/done) : 0]);
+  bar(document.getElementById('auth-chart'), authRows.length ? authRows : [['No data yet', 0, 0]]);
+
+  // Access chart
+  const accessRows = Object.entries(patterns.credential_access || {}).map(([k,v]) => [k, `${v.count} (${v.pct}%)`, v.pct]);
+  bar(document.getElementById('access-chart'), accessRows.length ? accessRows : [['No data yet', 0, 0]], (label) => label === 'gated');
+
+  // MCP chart
+  const mcpCounts = patterns.composio_toolkit_exists || {};
+  const mcpRows = Object.entries(mcpCounts).map(([k,v]) => [k === 'true' ? 'Composio toolkit exists' : (k === 'false' ? 'No Composio toolkit' : 'Not checked'), v, done ? Math.round(100*v/done) : 0]);
+  bar(document.getElementById('mcp-chart'), mcpRows.length ? mcpRows : [['No data yet', 0, 0]]);
+
+  // Buildability chart
+  const buildRows = Object.entries(patterns.buildability || {}).map(([k,v]) => [k, `${v.count} (${v.pct}%)`, v.pct]);
+  bar(document.getElementById('buildability-chart'), buildRows.length ? buildRows : [['No data yet', 0, 0]], (label) => label === 'blocked');
+
+  // Blockers
+  const blockers = patterns.top_blockers || [];
+  if (blockers.length) {
+    const maxN = Math.max(...blockers.map(b => b[1]));
+    bar(document.getElementById('blockers-chart'), blockers.map(([k,v]) => [k, v, Math.round(100*v/maxN)]));
+  }
+
+  // Verification summary
+  const vsum = verification.summary;
+  document.getElementById('verification-summary').innerHTML = vsum
+    ? `Sampled <b>${vsum.sample_size}</b>/${done} apps (${vsum.sample_pct_of_total}%, seed=${vsum.seed}) · ${vsum.fields_checked} fields checked · ` +
+      `<b>${vsum.correct}</b> correct, <b>${vsum.incorrect}</b> incorrect, <b>${vsum.unverifiable}</b> unverifiable · ` +
+      `Initial accuracy: <b>${vsum.initial_accuracy_pct}%</b>` +
+      (vsum.corrections_applied ? ` · ${vsum.corrections_applied} corrections applied · Final accuracy: <b>${vsum.final_accuracy_pct}%</b>` : ' · run with --apply-corrections to fix and re-measure')
+    : 'No verification run yet — run scripts/verify_sample.py.';
 
   document.getElementById('human-note').innerHTML = done < total
-    ? `So far, every field for the ${done} researched apps was pulled from a real, cited source rather than guessed — where docs were ambiguous or split across multiple auth paths (e.g. Attio's access-token vs. OAuth split depending on publish status), that nuance was captured manually rather than collapsed into a single label. The remaining ${total-done} apps are queued for the agent; any it flags as low-confidence or that verification disagrees with will get the same manual treatment before being counted.`
+    ? `Every field for the ${done} researched apps so far traces to a specific cited source, not a guess — ambiguous cases (e.g. an app with multiple auth paths depending on publish status) got a manual judgment call rather than being collapsed into a single oversimplified label. The remaining ${total-done} apps are queued for the agent; anything it flags as low-confidence or that verification marks incorrect gets the same manual treatment before being counted in the patterns above.`
     : `Every disagreement the verification pass found between the agent's claim and its cited source was manually resolved before being counted in the patterns above.`;
 
-  const tbody = document.querySelector('#findings-table tbody');
-  if (!results.length) { return; }
-  tbody.innerHTML = results.map(r => `
-    <tr>
-      <td>${r.id}</td>
-      <td><strong>${r.app}</strong><div style="color:var(--muted); font-size:12px;">${r.one_line||''}</div></td>
-      <td>${r.category}</td>
-      <td>${(r.auth_methods||[]).join(', ')}</td>
-      <td><span class="badge ${r.self_serve==='self-serve'?'ready':'gated'}">${r.self_serve||'—'}</span></td>
-      <td><span class="badge ${r.buildability_verdict==='ready'?'ready':'gated'}">${r.buildability_verdict||'—'}</span></td>
-      <td class="evidence">${(r.evidence_urls||[]).map(u=>`<a href="${u}" target="_blank">source</a>`).join(' · ')}</td>
-    </tr>
-  `).join('');
+  // Table + filters
+  function renderTable(rows) {
+    const tbody = document.querySelector('#findings-table tbody');
+    if (!rows.length) { tbody.innerHTML = `<tr><td colspan="10" style="color:var(--muted)">No matches.</td></tr>`; return; }
+    tbody.innerHTML = rows.map(r => {
+      const evidence = r.evidence || {};
+      const allUrls = [...new Set(Object.values(evidence).flat())];
+      const toolkit = (r.composio_catalog || {}).composio_toolkit_exists;
+      return `
+        <tr>
+          <td>${r.id}</td>
+          <td><strong>${r.app}</strong><div style="color:var(--muted); font-size:11.5px;">${r.one_line||''}</div></td>
+          <td>${r.category}</td>
+          <td>${(r.auth_methods||[]).join(', ')}</td>
+          <td>${(r.api_protocols||[]).join('+')||'—'}</td>
+          <td>${toolkit === true ? '✓ yes' : toolkit === false ? '— no' : '? unchecked'}</td>
+          <td><span class="badge ${r.credential_access==='self-serve'?'ready':(r.credential_access==='gated'?'partial':'')}">${r.credential_access||'—'}</span></td>
+          <td><span class="badge ${r.buildability_verdict||''}">${r.buildability_verdict||'—'}</span></td>
+          <td>${r.confidence||'—'}</td>
+          <td class="evidence">${allUrls.map(u=>`<a href="${u}" target="_blank">source</a>`).join('')}</td>
+        </tr>`;
+    }).join('');
+  }
+  renderTable(results);
+
+  const searchBox = document.getElementById('search-box');
+  const verdictFilter = document.getElementById('verdict-filter');
+  const accessFilter = document.getElementById('access-filter');
+  function applyFilters() {
+    const q = searchBox.value.toLowerCase();
+    const v = verdictFilter.value, a = accessFilter.value;
+    renderTable(results.filter(r =>
+      (!q || r.app.toLowerCase().includes(q) || r.category.toLowerCase().includes(q)) &&
+      (!v || r.buildability_verdict === v) &&
+      (!a || r.credential_access === a)
+    ));
+  }
+  [searchBox, verdictFilter, accessFilter].forEach(el => el.addEventListener('input', applyFilters));
 }
 load();
 </script>

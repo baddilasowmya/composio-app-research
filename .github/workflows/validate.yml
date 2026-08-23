@@ -1,0 +1,32 @@
+name: Validate research data
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check JSON files are valid
+        run: |
+          python -c "import json; json.load(open('data/apps.json'))"
+          python -c "import json; json.load(open('data/results.json'))" || echo "results.json missing or empty -- OK pre-research"
+
+      - name: Run schema tests
+        run: python tests/test_schema.py
+
+      - name: Run URL tests
+        run: python tests/test_urls.py
+
+      - name: Run quality gate (non-blocking until 100/100)
+        run: python scripts/validate_results.py || echo "Quality gate reports incomplete coverage -- expected until research_agent.py has been run to completion."

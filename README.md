@@ -1,72 +1,162 @@
-# Composio App Research — Take-Home Assignment
+# Composio App Research — AI Product Ops take-home
 
-Research pipeline for the 100-app list: for each app, capture category, auth
-method(s), self-serve vs. gated credentials, API surface, MCP existence,
-buildability verdict, and evidence URLs — then find the cross-app patterns.
+🟢 **Repo:** you're in it.
+🔵 **Live dashboard:** enable GitHub Pages (Settings → Pages → branch `main`, folder `/docs`) to get `https://<username>.github.io/composio-app-research/` — until then, open `docs/index.html` directly.
 
-## Structure
+## Current status — read this first
+
+**4 of 100 apps are fully, genuinely researched** (Salesforce, HubSpot, Pipedrive,
+Attio — Category 1, CRM and Sales), each with real citations checked by hand.
+**The other 96 are queued**, not faked — `data/results.json` only contains
+records that actually went through research, and `scripts/validate_results.py`
+enforces that: it fails loudly if any record is missing fields, has an
+unresolved error, or lacks evidence, and it reports current coverage honestly
+rather than claiming 100/100 when it isn't.
+
+Reaching 100/100 requires running `scripts/research_agent.py` with an
+`ANTHROPIC_API_KEY` (and ideally a `COMPOSIO_API_KEY` — see below). That takes
+about 15–25 minutes once you have keys. See **Running it** below.
+
+## What this is
+
+For each of the 100 apps in Composio's research set: category, auth method(s),
+self-serve vs. gated credential access, API surface, whether Composio already
+has a first-party toolkit for it, and a buildability verdict — every field
+backed by a real source URL, with a verification pass that fact-checks a
+sample against those sources and reports honest before/after accuracy.
+
+## How it works
 
 ```
-data/
-  apps.json          # the 100-app input list (id, app, category, hint)
-  results.json        # per-app research output (seeded with 4 real, sourced entries)
-  run_log.json         # per-app run status/timing once the agent has run
-  verification.json    # sampled accuracy check output
-scripts/
-  research_agent.py   # the agent: Claude + web_search tool, researches each app
-  verify_sample.py     # samples N results and checks each field against its cited sources
-docs/
-  index.html            # the deliverable — findings, patterns, process, verification
+100 apps (data/apps.json)
+        ↓
+Composio toolkit-catalog check   ← composio.toolkits.get(slug=...), first-party evidence
+        ↓
+Claude + web_search fills remaining fields, cites a URL per field
+        ↓
+Schema + evidence validation (retries on failure, exponential backoff)
+        ↓
+data/results.json (incremental — safe to stop/resume)
+        ↓
+Verification: sample N results, re-check each field against its own cited
+URL, log CORRECT / INCORRECT / UNVERIFIABLE, apply corrections
+        ↓
+data/verification.json (audit trail + before/after accuracy)
+        ↓
+Pattern analysis over the corrected data → data/patterns.json
+        ↓
+docs/index.html — reads results.json + patterns.json directly, no rebuild needed
 ```
 
-## How the research was actually done
+## Where Composio is actually used
 
-**Apps 1–4 (Salesforce, HubSpot, Pipedrive, Attio)** were researched by hand,
-one query per app, cross-referencing 3–9 sources each, with every field
-backed by a real doc URL. This is the ground-truth seed and the format the
-agent is instructed to reproduce.
+Not just installed and left unused. `scripts/research_agent.py` calls
+`composio.toolkits.get(slug=...)` against **Composio's own toolkit catalog**
+for every app, *before* any web research happens. If Composio already ships a
+toolkit for an app, that's first-party proof the app is agent-callable today —
+authoritative evidence from Composio's own platform, not an LLM inference.
+That result is fed into the research prompt so Claude doesn't need to
+re-derive what Composio's own SDK already knows; it only researches the
+narrower fields the catalog can't answer (specific auth flow, self-serve vs.
+gated, API breadth). See the docstring at the top of `research_agent.py` for
+the full breakdown.
 
-**Apps 5–100** are designed to be researched by `research_agent.py`, which
-does the identical job automatically: for each app, it calls Claude with the
-web_search tool, asks it to find and structure the same fields, and requires
-a source URL for every claim. This is the "do it with an agent, not by hand"
-part of the assignment — the manual pass above proves the method works and
-gives the agent a format to match; the script scales it to all 100.
+## Research schema
 
-**Where a human is still needed:** the agent's output isn't taken as ground
-truth. `verify_sample.py` re-checks a random sample of the agent's results
-against the cited URLs and reports field-level accuracy. Any app where the
-verifier disagrees with the agent gets manually reviewed before being counted
-in the final patterns — this is the actual verification loop the assignment
-asks for, not a one-line "we checked it" claim.
+Each record in `results.json`:
+
+| Field | Meaning |
+|---|---|
+| `one_line` | what the app does |
+| `auth_methods`, `auth_notes` | supported auth, with nuance (e.g. static token vs. OAuth for public apps) |
+| `credential_access` | `self-serve` / `gated` / `unclear` |
+| `credential_requirements` | what's actually needed to get credentials |
+| `api_protocols`, `api_breadth`, `api_documentation_url` | shape of the public API |
+| `composio_catalog` | first-party result of the Composio toolkit-catalog check |
+| `buildability_verdict`, `blocker`, `buildability_reason` | `ready` / `partial` / `blocked`, and why |
+| `confidence` | `high` / `medium` / `low` |
+| `evidence` | **field-level**, e.g. `{"auth_methods": ["url"], "credential_access": ["url"]}` — not one undifferentiated URL list, so any claim traces to the specific source that backs it |
+| `researched_at`, `research_method` | when and how the record was produced |
+
+## Verification methodology
+
+`scripts/verify_sample.py` samples N apps (fixed seed → reproducible),
+re-checks each field's claim against its own cited URL by re-fetching and
+asking a fact-checking pass to mark it `CORRECT` / `INCORRECT` /
+`UNVERIFIABLE`, and writes a full per-field audit trail to
+`data/verification.json` — not just a summary percentage. With
+`--apply-corrections`, confirmed errors are written back into `results.json`
+and flagged `human_corrected: true`, and the script reports both the initial
+and post-correction accuracy.
+
+## Where a human is still needed
+
+- Every agent-produced record that fails validation (`scripts/validate_results.py`)
+  or gets flagged `INCORRECT` by verification is meant for manual review before
+  it's trusted in the pattern analysis — the pipeline is built to *not* silently
+  accept low-quality output.
+- The 4 hand-researched apps set the ground-truth format the agent is asked to
+  match; if the agent's output style drifts from that once it runs at scale,
+  that's a signal to intervene, not something the pipeline hides.
+- Ambiguous docs (e.g. an app with multiple auth paths depending on publish
+  status, like Attio) got manual judgment calls that a fully automated pass
+  might collapse into an oversimplified single label.
 
 ## Running it
 
 ```bash
-pip install anthropic
-export ANTHROPIC_API_KEY=your_key_here
+pip install -r requirements.txt
+cp .env.example .env   # fill in ANTHROPIC_API_KEY (required) and COMPOSIO_API_KEY (recommended)
+export $(cat .env | xargs)
 
-python scripts/research_agent.py     # researches all apps not already in results.json
-python scripts/verify_sample.py --n 20   # samples 20 results and checks them against sources
+python scripts/research_agent.py              # researches all apps not yet in results.json
+python scripts/research_agent.py --retry-failed   # re-run only apps that failed validation
+
+python scripts/validate_results.py             # quality gate — exits non-zero if anything's incomplete/invalid
+python -m pytest tests/ -v                      # or: python tests/test_schema.py && python tests/test_urls.py
+
+python scripts/verify_sample.py --n 25 --seed 42                     # sample + audit, no writes
+python scripts/verify_sample.py --n 25 --seed 42 --apply-corrections  # writes fixes back into results.json
+
+python scripts/analyze_patterns.py              # regenerate data/patterns.json from current results.json
 ```
 
-Both scripts write incrementally (`results.json` / `verification.json` are
-updated after every app), so a crash or rate limit mid-run loses at most one
-app's progress, not the whole batch.
+All scripts write incrementally, so a crash or rate limit mid-run loses at
+most the app in progress, not the whole batch.
 
-## Status
+## Repo structure
 
-- [x] App list (100/100) captured in `data/apps.json`
-- [x] Research agent script written and ready to run
-- [x] Verification script written and ready to run
-- [x] 4/100 apps researched and sourced by hand (seed/proof of concept)
-- [ ] Remaining 96 apps — run `research_agent.py` with an API key to complete
-- [ ] Pattern analysis — to be generated from the full `results.json` once complete
-- [ ] Final deliverable page — structure built in `docs/index.html`, populates from `results.json`
+```
+data/
+  apps.json          100-app input list
+  results.json       per-app research records (currently 4/100 real)
+  failures.json       apps that failed validation after retries
+  run_log.json        per-app execution log (status, attempts, timing)
+  verification.json   sampled verification audit trail + accuracy
+  patterns.json       computed cross-app patterns (regenerated from results.json)
+scripts/
+  research_agent.py    Composio catalog check + Claude/web_search research
+  verify_sample.py      field-level fact-check against cited sources
+  validate_results.py   quality gate / CI check
+  analyze_patterns.py    pattern computation
+tests/
+  test_schema.py        required fields, enums, ID integrity
+  test_urls.py           evidence URLs are well-formed and non-placeholder
+docs/
+  index.html             dashboard — reads results.json + patterns.json live
+.github/workflows/
+  validate.yml            CI: runs tests + quality gate on every push
+```
 
-## Notes on the deliverable
+## Limitations
 
-`docs/index.html` is a single self-contained page (deploy via GitHub Pages)
-built to read `data/results.json` directly, so once the agent finishes the
-remaining apps, the page updates without any redesign — regenerating the
-data regenerates the report.
+- APIs and auth requirements change; `researched_at` timestamps every claim.
+- OAuth/approval requirements can vary by account tier even within one app.
+- "Buildable" means "publicly documented access existed at research time" —
+  not a guarantee Composio has built or will build a toolkit for it (though
+  the catalog check tells you where one already exists).
+- Third-party/community MCP servers, where mentioned, aren't vetted the way
+  an official one is.
+- Verification re-checks cited sources, not the full space of possible
+  sources — an app could have a correct claim that its own evidence URL
+  states poorly, or vice versa.

@@ -1,0 +1,55 @@
+{
+  "coverage": {
+    "researched": 4,
+    "of_total": 100,
+    "pct": 4.0
+  },
+  "auth_distribution": {
+    "OAuth2 (Connected App)": 1,
+    "Private App static token": 1,
+    "OAuth2 (public/multi-portal apps)": 1,
+    "API token (static)": 1,
+    "OAuth2 (Marketplace apps)": 1,
+    "Access token (Bearer, workspace-scoped)": 1,
+    "OAuth2 (published integrations / MCP)": 1
+  },
+  "credential_access": {
+    "self-serve": {
+      "count": 3,
+      "pct": 75.0
+    },
+    "gated": {
+      "count": 1,
+      "pct": 25.0
+    }
+  },
+  "api_protocols": {
+    "REST+SOAP": 1,
+    "REST": 3
+  },
+  "composio_toolkit_exists": {
+    "unknown": 4
+  },
+  "buildability": {
+    "ready": {
+      "count": 4,
+      "pct": 100.0
+    }
+  },
+  "top_blockers": [],
+  "confidence_distribution": {
+    "high": 4
+  },
+  "category_analysis": {
+    "CRM and Sales": {
+      "n": 4,
+      "gated_pct": 25.0,
+      "ready_pct": 100.0
+    }
+  },
+  "key_findings": [
+    "Not enough apps researched per category yet (need 5+ in at least 2 categories) to draw a reliable category comparison.",
+    "OAuth2 (Connected App) is the most common auth method so far (1/4 apps).",
+    "75.0% self-serve vs. 25.0% gated so far."
+  ]
+}
