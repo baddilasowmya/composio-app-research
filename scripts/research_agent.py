@@ -1,14 +1,14 @@
 """
-Composio App Research Agent (v3 -- Groq backend)
----------------------------------------------------
+Composio App Research Agent
+------------------------------
 For each app in data/apps.json, produce a structured research record with
 field-level evidence, confidence, and a buildability verdict.
 
-WHY GROQ INSTEAD OF ANTHROPIC:
+RESEARCH BACKEND -- groq/compound:
   Groq's `groq/compound` system has automatic, built-in web search (backed
-  by Tavily) with a generous free tier -- no separate search-tool billing,
-  no Anthropic key required. This makes the 100-app run something you can
-  actually execute for free. See: https://console.groq.com/docs/compound
+  by Tavily) with a generous free tier -- no separate search-tool billing
+  or paid key required to run the full 100-app pipeline.
+  See: https://console.groq.com/docs/compound
 
 WHERE COMPOSIO IS USED (not just installed):
   `composio.toolkits.get(slug=...)` is called for every app FIRST, against

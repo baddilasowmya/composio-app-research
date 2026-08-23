@@ -90,7 +90,7 @@
     <h2>Methodology</h2>
     <div class="process-steps">
       <div class="step"><div class="dot"></div><div><h3>1. Composio catalog check (first-party)</h3><p><code>composio.toolkits.get(slug=...)</code> checks Composio's own toolkit catalog for each app before any research — if a toolkit already exists, that's authoritative proof of buildability straight from the platform, not an inference.</p></div></div>
-      <div class="step"><div class="dot"></div><div><h3>2. Agent research (Claude + web search)</h3><p>Fills the fields the catalog can't answer — auth flow, self-serve vs. gated, API breadth — with a required source URL per field. Schema and evidence validation retries failures with backoff.</p></div></div>
+      <div class="step"><div class="dot"></div><div><h3>2. Agent research (groq/compound + web search)</h3><p>Fills the fields the catalog can't answer — auth flow, self-serve vs. gated, API breadth — with a required source URL per field. Schema and evidence validation retries failures with backoff.</p></div></div>
       <div class="step"><div class="dot"></div><div><h3>3. Verification sample</h3><p>A reproducible random sample (fixed seed) is re-checked field-by-field against its own cited source, logged CORRECT / INCORRECT / UNVERIFIABLE with a full audit trail.</p></div></div>
       <div class="step"><div class="dot"></div><div><h3>4. Human correction</h3><p>Confirmed errors are corrected and flagged <code>human_corrected</code> before being counted in the patterns below — the reported accuracy is post-correction, not the agent's raw first pass.</p></div></div>
       <div class="step"><div class="dot"></div><div><h3>5. Pattern analysis</h3><p>Computed directly from the corrected dataset — category-level claims only render when enough apps in a category have been researched to support them.</p></div></div>
@@ -157,7 +157,7 @@
   </section>
 
   <footer>
-    Source: <code>data/results.json</code> + <code>data/patterns.json</code> · Agent: <code>scripts/research_agent.py</code> (Composio catalog + Claude/web_search) · Verification: <code>scripts/verify_sample.py</code> · Full run instructions in the repo README.
+    Source: <code>data/results.json</code> + <code>data/patterns.json</code> · Agent: <code>scripts/research_agent.py</code> (Composio catalog + groq/compound web_search) · Verification: <code>scripts/verify_sample.py</code> · Full run instructions in the repo README.
   </footer>
 
 </div>

@@ -1,6 +1,6 @@
 """
-Verification pass (v3 -- Groq backend)
------------------------------------------
+Verification pass
+--------------------
 Samples N apps (fixed random seed -> reproducible sample) from results.json,
 re-checks each field against its OWN cited evidence URL (field-level, not
 one blob of URLs), and records a per-field audit trail:
@@ -11,7 +11,7 @@ Writes data/verification.json with the full audit trail plus a summary
 (initial accuracy, corrections applied, final accuracy).
 
 Uses groq/compound (same backend as research_agent.py) so the whole
-pipeline runs on one free API key -- no separate Anthropic key needed.
+pipeline runs on one free API key.
 
 Usage:
   python verify_sample.py --n 25 --seed 42
