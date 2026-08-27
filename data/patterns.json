@@ -1,8 +1,8 @@
 {
   "coverage": {
-    "researched": 4,
+    "researched": 67,
     "of_total": 100,
-    "pct": 4.0
+    "pct": 67.0
   },
   "auth_distribution": {
     "OAuth2 (Connected App)": 1,
@@ -11,45 +11,155 @@
     "API token (static)": 1,
     "OAuth2 (Marketplace apps)": 1,
     "Access token (Bearer, workspace-scoped)": 1,
-    "OAuth2 (published integrations / MCP)": 1
+    "OAuth2 (published integrations / MCP)": 1,
+    "unclear": 44,
+    "API key": 11,
+    "OAuth2": 8,
+    "MTProto": 1,
+    "JWT": 1,
+    "API token": 1,
+    "OAuth": 1
   },
   "credential_access": {
     "self-serve": {
-      "count": 3,
-      "pct": 75.0
+      "count": 16,
+      "pct": 23.9
     },
     "gated": {
-      "count": 1,
-      "pct": 25.0
+      "count": 5,
+      "pct": 7.5
+    },
+    "unclear": {
+      "count": 46,
+      "pct": 68.7
     }
   },
   "api_protocols": {
     "REST+SOAP": 1,
-    "REST": 3
+    "REST": 22,
+    "unclear": 41,
+    "GraphQL": 1,
+    "GraphQL+REST": 2
   },
   "composio_toolkit_exists": {
-    "unknown": 4
+    "unknown": 67
   },
   "buildability": {
     "ready": {
-      "count": 4,
-      "pct": 100.0
+      "count": 19,
+      "pct": 28.4
+    },
+    "blocked": {
+      "count": 32,
+      "pct": 47.8
+    },
+    "partial": {
+      "count": 16,
+      "pct": 23.9
     }
   },
-  "top_blockers": [],
+  "top_blockers": [
+    [
+      "No public API documentation or authentication details found on the site.",
+      2
+    ],
+    [
+      "authentication method and credential acquisition details are not provided",
+      2
+    ],
+    [
+      "No public API documentation or authentication details are provided on the site.",
+      2
+    ],
+    [
+      "No public API documentation, authentication details, or credential acquisition process found on the site",
+      1
+    ],
+    [
+      "Lack of public API documentation and authentication details.",
+      1
+    ],
+    [
+      "No public API documentation or authentication details found.",
+      1
+    ],
+    [
+      "Credential acquisition process is not clearly documented.",
+      1
+    ],
+    [
+      "No public API documentation or authentication information is available on the page",
+      1
+    ],
+    [
+      "No public API documentation or authentication details are provided on the page",
+      1
+    ],
+    [
+      "No public API information provided on the page",
+      1
+    ]
+  ],
   "confidence_distribution": {
-    "high": 4
+    "high": 23,
+    "low": 24,
+    "medium": 20
   },
   "category_analysis": {
     "CRM and Sales": {
-      "n": 4,
-      "gated_pct": 25.0,
-      "ready_pct": 100.0
+      "n": 10,
+      "gated_pct": 10.0,
+      "ready_pct": 40.0
+    },
+    "Support": {
+      "n": 10,
+      "gated_pct": 0.0,
+      "ready_pct": 0.0
+    },
+    "Communication": {
+      "n": 10,
+      "gated_pct": 10.0,
+      "ready_pct": 50.0
+    },
+    "Marketing, Ads, Email and Social": {
+      "n": 9,
+      "gated_pct": 0.0,
+      "ready_pct": 0.0
+    },
+    "E-commerce": {
+      "n": 10,
+      "gated_pct": 20.0,
+      "ready_pct": 30.0
+    },
+    "SEO and Data": {
+      "n": 10,
+      "gated_pct": 10.0,
+      "ready_pct": 50.0
+    },
+    "DevTools and Infra": {
+      "n": 2,
+      "gated_pct": 0.0,
+      "ready_pct": 0.0
+    },
+    "Productivity": {
+      "n": 2,
+      "gated_pct": 0.0,
+      "ready_pct": 50.0
+    },
+    "Finance and Payments": {
+      "n": 2,
+      "gated_pct": 0.0,
+      "ready_pct": 0.0
+    },
+    "AI, Research and Media-native": {
+      "n": 2,
+      "gated_pct": 0.0,
+      "ready_pct": 50.0
     }
   },
   "key_findings": [
-    "Not enough apps researched per category yet (need 5+ in at least 2 categories) to draw a reliable category comparison.",
-    "OAuth2 (Connected App) is the most common auth method so far (1/4 apps).",
-    "75.0% self-serve vs. 25.0% gated so far."
+    "E-commerce has the highest gated-credential rate among categories with 5+ researched apps (20.0%), vs. Support at 0.0%.",
+    "unclear is the most common auth method so far (44/67 apps).",
+    "23.9% self-serve vs. 7.5% gated so far."
   ]
 }

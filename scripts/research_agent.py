@@ -123,7 +123,7 @@ def normalize_hint_url(hint):
     return url_part
 
 
-def fetch_page_text(url):
+def fetch_page_text(url, max_chars=FETCH_MAX_CHARS):
     try:
         resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=FETCH_TIMEOUT)
         if resp.status_code >= 400:
@@ -136,7 +136,7 @@ def fetch_page_text(url):
         else:
             text = re.sub(r"<[^>]+>", " ", resp.text)
             text = re.sub(r"\s{2,}", " ", text)
-        text = text[:FETCH_MAX_CHARS]
+        text = text[:max_chars]
         if len(text) < 200:
             return None, "page fetched but too thin (likely JS-rendered)"
         return text, None
@@ -149,19 +149,36 @@ def fetch_page_text(url):
 # ---------------------------------------------------------------------------
 
 class LLMProvider:
-    def __init__(self):
-        if os.environ.get("GROQ_API_KEY"):
+    def __init__(self, force=None):
+        """force: 'groq' | 'anthropic' | 'openrouter' -- explicitly picks a provider
+        regardless of which other keys are also set in the environment. Use this
+        (via --provider) when you have multiple keys set and want a specific one,
+        rather than fighting with unsetting environment variables."""
+        chosen = force or (
+            "groq" if os.environ.get("GROQ_API_KEY") else
+            "anthropic" if os.environ.get("ANTHROPIC_API_KEY") else
+            "openrouter" if os.environ.get("OPENROUTER_API_KEY") else
+            None
+        )
+
+        if chosen == "groq":
+            if not os.environ.get("GROQ_API_KEY"):
+                raise SystemExit("--provider groq was requested but GROQ_API_KEY is not set.")
             self.kind = "groq"
             from groq import Groq
             self.client = Groq(api_key=os.environ["GROQ_API_KEY"], default_headers={"Groq-Model-Version": "latest"})
             self.model = "openai/gpt-oss-120b"           # cheap/fast for extraction-from-text
             self.search_model = "groq/compound"           # only used for the search fallback
-        elif os.environ.get("ANTHROPIC_API_KEY"):
+        elif chosen == "anthropic":
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                raise SystemExit("--provider anthropic was requested but ANTHROPIC_API_KEY is not set.")
             self.kind = "anthropic"
             import anthropic
             self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
             self.model = "claude-sonnet-4-6"
-        elif os.environ.get("OPENROUTER_API_KEY"):
+        elif chosen == "openrouter":
+            if not os.environ.get("OPENROUTER_API_KEY"):
+                raise SystemExit("--provider openrouter was requested but OPENROUTER_API_KEY is not set.")
             self.kind = "openrouter"
             from openai import OpenAI
             self.client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url="https://openrouter.ai/api/v1")
@@ -169,7 +186,8 @@ class LLMProvider:
         else:
             raise SystemExit(
                 "No LLM key found. Set ONE of: GROQ_API_KEY (free tier), "
-                "ANTHROPIC_API_KEY, or OPENROUTER_API_KEY in your environment."
+                "ANTHROPIC_API_KEY, or OPENROUTER_API_KEY in your environment, "
+                "or pass --provider explicitly."
             )
         print(f"Using provider: {self.kind} (model: {self.model})")
 
@@ -233,9 +251,9 @@ def check_composio_catalog(composio_client, app_name):
     return {"checked": True, "composio_toolkit_exists": False, "toolkit_slug": slug_guess}
 
 
-def research_app(provider, app, composio_catalog_result):
+def research_app(provider, app, composio_catalog_result, max_chars=FETCH_MAX_CHARS):
     hint_url = normalize_hint_url(app["hint"])
-    page_text, fetch_error = fetch_page_text(hint_url)
+    page_text, fetch_error = fetch_page_text(hint_url, max_chars=max_chars)
 
     if page_text:
         user_prompt = f"""App: {app['app']}
@@ -291,10 +309,11 @@ def validate_record(record):
 def research_app_with_retries(provider, composio_client, app):
     composio_result = check_composio_catalog(composio_client, app["app"])
     last_error = None
+    max_chars = FETCH_MAX_CHARS
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            record = research_app(provider, app, composio_result)
+            record = research_app(provider, app, composio_result, max_chars=max_chars)
             record["composio_catalog"] = composio_result
             record["researched_at"] = datetime.now(timezone.utc).isoformat()
             record["research_method"] = f"{provider.kind}:{record.pop('_fetch_method', 'unknown')}"
@@ -308,9 +327,23 @@ def research_app_with_retries(provider, composio_client, app):
             last_error = f"json parse error: {e}"
             time.sleep(min(2 ** attempt, 10))
         except Exception as e:
+            err_str = str(e)
             last_error = f"exception: {e}"
-            if "rate_limit" in str(e).lower() or "429" in str(e):
-                print(f"    rate limited -- waiting 65s for the per-minute budget to reset...")
+            if "tokens per day" in err_str.lower() or "(tpd)" in err_str.lower():
+                # Daily quota exhausted -- retrying inside this run is pointless
+                # (the message usually says "try again in N minutes", often 10-25+).
+                # Fail fast so the run doesn't burn minutes per app; --retry-failed
+                # later (once quota frees up, or with a different provider key) picks
+                # these back up without re-doing the apps that already succeeded.
+                print(f"    daily token quota exhausted for this model -- skipping "
+                      f"(re-run --retry-failed later, or set a different provider key)")
+                return None, attempt, last_error
+            elif "request_too_large" in err_str.lower() or "413" in err_str:
+                max_chars = max(1000, max_chars // 2)
+                print(f"    request too large -- retrying with shorter page text ({max_chars} chars)")
+                time.sleep(2)
+            elif "rate_limit" in err_str.lower() or "429" in err_str:
+                print(f"    rate limited (per-minute) -- waiting 65s...")
                 time.sleep(65)
             else:
                 time.sleep(min(2 ** attempt, 10))
@@ -321,9 +354,11 @@ def research_app_with_retries(provider, composio_client, app):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--retry-failed", action="store_true", help="only re-run apps listed in failures.json")
+    parser.add_argument("--provider", choices=["groq", "anthropic", "openrouter"], default=None,
+                         help="force a specific provider even if multiple API keys are set in your environment")
     args = parser.parse_args()
 
-    provider = LLMProvider()
+    provider = LLMProvider(force=args.provider)
 
     composio_key = os.environ.get("COMPOSIO_API_KEY")
     composio_client = None
@@ -356,7 +391,7 @@ def main():
             status = "ok"
             print(f"[{app['id']}/100] {app['app']}: ok ({record.get('research_method','?')}, {attempts} attempt(s), {elapsed}s)")
         else:
-            failures.append({"id": app["id"], "app": app["app"], "error": error})
+            failures = [f for f in failures if f["id"] != app["id"]] + [{"id": app["id"], "app": app["app"], "error": error}]
             status = "failed"
             print(f"[{app['id']}/100] {app['app']}: FAILED after {attempts} attempts -- {error}")
 
