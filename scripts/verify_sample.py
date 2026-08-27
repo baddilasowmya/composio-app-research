@@ -73,24 +73,38 @@ def fetch_page_text(url):
 
 
 class LLMProvider:
-    def __init__(self):
-        if os.environ.get("GROQ_API_KEY"):
+    def __init__(self, force=None):
+        chosen = force or (
+            "groq" if os.environ.get("GROQ_API_KEY") else
+            "anthropic" if os.environ.get("ANTHROPIC_API_KEY") else
+            "openrouter" if os.environ.get("OPENROUTER_API_KEY") else
+            None
+        )
+
+        if chosen == "groq":
+            if not os.environ.get("GROQ_API_KEY"):
+                raise SystemExit("--provider groq was requested but GROQ_API_KEY is not set.")
             self.kind = "groq"
             from groq import Groq
             self.client = Groq(api_key=os.environ["GROQ_API_KEY"], default_headers={"Groq-Model-Version": "latest"})
             self.model = "openai/gpt-oss-120b"
-        elif os.environ.get("ANTHROPIC_API_KEY"):
+        elif chosen == "anthropic":
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                raise SystemExit("--provider anthropic was requested but ANTHROPIC_API_KEY is not set.")
             self.kind = "anthropic"
             import anthropic
             self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
             self.model = "claude-sonnet-4-6"
-        elif os.environ.get("OPENROUTER_API_KEY"):
+        elif chosen == "openrouter":
+            if not os.environ.get("OPENROUTER_API_KEY"):
+                raise SystemExit("--provider openrouter was requested but OPENROUTER_API_KEY is not set.")
             self.kind = "openrouter"
             from openai import OpenAI
             self.client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url="https://openrouter.ai/api/v1")
-            self.model = os.environ.get("OPENROUTER_MODEL", "meta-llama/llama-3.1-8b-instruct:free")
+            self.model = os.environ.get("OPENROUTER_MODEL", "openrouter/free")
         else:
-            raise SystemExit("No LLM key found. Set ONE of: GROQ_API_KEY, ANTHROPIC_API_KEY, OPENROUTER_API_KEY.")
+            raise SystemExit("No LLM key found. Set ONE of: GROQ_API_KEY, ANTHROPIC_API_KEY, OPENROUTER_API_KEY, "
+                              "or pass --provider explicitly.")
         print(f"Using provider: {self.kind} (model: {self.model})")
 
     def complete(self, user_prompt):
@@ -139,9 +153,11 @@ def main():
     parser.add_argument("--n", type=int, default=25)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--apply-corrections", action="store_true")
+    parser.add_argument("--provider", choices=["groq", "anthropic", "openrouter"], default=None,
+                         help="force a specific provider even if multiple API keys are set")
     args = parser.parse_args()
 
-    provider = LLMProvider()
+    provider = LLMProvider(force=args.provider)
     results = json.loads(RESULTS_FILE.read_text())
     if len(results) < args.n:
         print(f"NOTE: only {len(results)} results exist, sampling all of them (requested {args.n}).")
