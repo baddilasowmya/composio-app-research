@@ -8,8 +8,10 @@
     "incorrect": 0,
     "unverifiable": 43,
     "initial_accuracy_pct": 10.4,
+    "error_rate_pct": 0.0,
+    "error_rate_note": "of claims the verifier could actually confirm or deny (excludes UNVERIFIABLE), the percent found incorrect",
     "corrections_applied": 0,
-    "final_accuracy_pct": 10.4
+    "final_accuracy_pct": null
   },
   "audit": [
     {
