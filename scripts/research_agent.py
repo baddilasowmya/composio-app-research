@@ -211,6 +211,8 @@ class LLMProvider:
                 max_completion_tokens=1400,
                 **kwargs,
             )
+            if not resp.choices or resp.choices[0].message.content is None:
+                return "{}"
             return resp.choices[0].message.content or "{}"
 
         if self.kind == "anthropic":
@@ -234,6 +236,8 @@ class LLMProvider:
                 temperature=0.1,
                 max_tokens=1400,
             )
+            if not resp.choices or resp.choices[0].message.content is None:
+                return "{}"
             return resp.choices[0].message.content or "{}"
 
 

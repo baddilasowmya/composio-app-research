@@ -128,6 +128,8 @@ class LLMProvider:
                 messages=[{"role": "system", "content": VERIFY_SYSTEM}, {"role": "user", "content": user_prompt}],
                 temperature=0.1, max_tokens=400,
             )
+            if not resp.choices or resp.choices[0].message.content is None:
+                return "{}"
             return resp.choices[0].message.content or "{}"
 
 
@@ -174,7 +176,15 @@ def main():
             urls = (record.get("evidence") or {}).get(field) or (record.get("evidence") or {}).get("buildability", [])
             if not claim or not urls:
                 continue
-            v = verify_field(provider, record["app"], field, claim, urls)
+            try:
+                v = verify_field(provider, record["app"], field, claim, urls)
+            except Exception as e:
+                # A single flaky response (empty completion, transient API error, etc.)
+                # should never abort the whole verification run -- record it as
+                # unverifiable-by-error and keep going, so a summary is always produced
+                # from whatever did succeed.
+                print(f"    error verifying {record['app']} / {field}: {e} -- marking unverifiable, continuing")
+                v = {"verdict": "UNVERIFIABLE", "reason": f"verification call failed: {e}", "corrected_value": None}
             entry = {
                 "app": record["app"], "id": record["id"], "field": field,
                 "agent_claim": claim, "source": urls,
