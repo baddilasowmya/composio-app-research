@@ -1,0 +1,643 @@
+{
+  "summary": {
+    "sample_size": 12,
+    "sample_pct_of_total": 12.0,
+    "seed": 42,
+    "fields_checked": 48,
+    "correct": 5,
+    "incorrect": 0,
+    "unverifiable": 43,
+    "initial_accuracy_pct": 10.4,
+    "corrections_applied": 0,
+    "final_accuracy_pct": 10.4
+  },
+  "audit": [
+    {
+      "app": "Plaid",
+      "id": 82,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://plaid.com/docs"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page is the Plaid Docs homepage, which lists product categories and navigation links. It contains no mention of an 'auth_methods' field or its value, so the claim cannot be confirmed or denied from this source.",
+      "corrected_value": null
+    },
+    {
+      "app": "Plaid",
+      "id": 82,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://plaid.com/docs"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page is Plaid's general documentation landing page, which only lists product categories and features. It does not contain any information about 'credential_access' or any field definitions related to data access practices that would confirm or deny whether this field is 'unclear'.",
+      "corrected_value": null
+    },
+    {
+      "app": "Plaid",
+      "id": 82,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://plaid.com/docs"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The Plaid docs home page does not contain any information about API protocols, so it cannot confirm or deny that the value is unclear.",
+      "corrected_value": null
+    },
+    {
+      "app": "Plaid",
+      "id": 82,
+      "field": "buildability_verdict",
+      "agent_claim": "partial",
+      "source": [
+        "https://plaid.com/docs"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Pylon",
+      "id": 15,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://usepylon.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Pylon",
+      "id": 15,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://usepylon.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes Pylon's features and capabilities but does not contain any information about credential_access or how it relates to Pylon's functionality.",
+      "corrected_value": null
+    },
+    {
+      "app": "Pylon",
+      "id": 15,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://usepylon.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Pylon",
+      "id": 15,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://usepylon.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text does not mention the 'buildability_verdict' field or indicate that it is blocked; it only notes an iframe being blocked, which is unrelated.",
+      "corrected_value": null
+    },
+    {
+      "app": "Attio",
+      "id": 4,
+      "field": "auth_methods",
+      "agent_claim": [
+        "Access token (Bearer, workspace-scoped)",
+        "OAuth2 (published integrations / MCP)"
+      ],
+      "source": [
+        "https://docs.attio.com/rest-api/overview"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Attio",
+      "id": 4,
+      "field": "credential_access",
+      "agent_claim": "gated",
+      "source": [
+        "https://www.stacksync.com/blog/how-to-get-an-attio-developer-account-and-start-working-with-attios-api"
+      ],
+      "verdict": "CORRECT",
+      "reason": "The page text explicitly states that unlike other CRMs, Attio does not allow automatic sign-up for a sandbox/dev account; users must manually request developer access via live chat or email, which typically takes a couple of days to approve. This manual approval process is consistent with 'gated' access.",
+      "corrected_value": null
+    },
+    {
+      "app": "Attio",
+      "id": 4,
+      "field": "api_protocols",
+      "agent_claim": [
+        "REST"
+      ],
+      "source": [
+        "https://attio.com/platform/developers"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Attio",
+      "id": 4,
+      "field": "buildability_verdict",
+      "agent_claim": "ready",
+      "source": [
+        "https://attio.com/platform/developers"
+      ],
+      "verdict": "CORRECT",
+      "reason": "The page extensively describes Attio's developer platform with REST API, App SDK, and MCP server, including detailed features for building integrations and apps, supporting a 'ready' buildability verdict.",
+      "corrected_value": null
+    },
+    {
+      "app": "Reducto",
+      "id": 95,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://reducto.ai"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes Reducto's document processing features but contains no mention of authentication methods, so it neither confirms nor denies the claim that auth_methods = [\"unclear\"].",
+      "corrected_value": null
+    },
+    {
+      "app": "Reducto",
+      "id": 95,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://reducto.ai"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Reducto",
+      "id": 95,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://reducto.ai"
+      ],
+      "verdict": "CORRECT",
+      "reason": "The page text does not mention api_protocols, making the value unclear, which matches the claimed value.",
+      "corrected_value": null
+    },
+    {
+      "app": "Reducto",
+      "id": 95,
+      "field": "buildability_verdict",
+      "agent_claim": "partial",
+      "source": [
+        "https://reducto.ai"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Klaviyo",
+      "id": 36,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://developers.klaviyo.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Klaviyo",
+      "id": 36,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://developers.klaviyo.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text from Klaviyo's developer site does not contain any information about credential access policies, procedures, or status, so the claim cannot be confirmed or denied.",
+      "corrected_value": null
+    },
+    {
+      "app": "Klaviyo",
+      "id": 36,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://developers.klaviyo.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Klaviyo",
+      "id": 36,
+      "field": "buildability_verdict",
+      "agent_claim": "partial",
+      "source": [
+        "https://developers.klaviyo.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Meta Ads",
+      "id": 32,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://developers.facebook.com/docs/marketing-apis"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Meta Ads",
+      "id": 32,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://developers.facebook.com/docs/marketing-apis"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes the Marketing API's capabilities for ad creation, campaign management, and related tools, but does not provide any information about credential access or security practices that would allow determination of whether credential access is 'unclear'.",
+      "corrected_value": null
+    },
+    {
+      "app": "Meta Ads",
+      "id": 32,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://developers.facebook.com/docs/marketing-apis"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes the Marketing API and its capabilities but does not provide any information about 'api_protocols' or what protocols are supported.",
+      "corrected_value": null
+    },
+    {
+      "app": "Meta Ads",
+      "id": 32,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://developers.facebook.com/docs/marketing-apis"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Aircall",
+      "id": 29,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://aircall.io"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text contains no information about Aircall's authentication methods, so it neither confirms nor denies the claim that auth_methods is unclear.",
+      "corrected_value": null
+    },
+    {
+      "app": "Aircall",
+      "id": 29,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://aircall.io"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text is Aircall's marketing homepage and does not contain any specific information about 'credential_access'. While it mentions security and compliance certifications (SOC2, GDPR, HIPAA, etc.), there is no discussion of credential access policies or practices that would allow confirming or denying whether the value is 'unclear'.",
+      "corrected_value": null
+    },
+    {
+      "app": "Aircall",
+      "id": 29,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://aircall.io"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page is Aircall's marketing homepage, which describes its AI-powered communications platform, integrations, and security compliance. It contains no information about API protocols (e.g., REST, GraphQL, webhooks). The claim that api_protocols is ['unclear'] cannot be confirmed or denied from this source.",
+      "corrected_value": null
+    },
+    {
+      "app": "Aircall",
+      "id": 29,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://aircall.io"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text from aircall.io is a marketing homepage describing Aircall's product features. It does not contain any information about buildability, technical integration feasibility, or a 'blocked' status for any development effort.",
+      "corrected_value": null
+    },
+    {
+      "app": "Help Scout",
+      "id": 18,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://helpscout.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Help Scout",
+      "id": 18,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://helpscout.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Help Scout",
+      "id": 18,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://helpscout.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes Help Scout's features and does not mention API protocols or provide any information about the 'api_protocols' field.",
+      "corrected_value": null
+    },
+    {
+      "app": "Help Scout",
+      "id": 18,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://helpscout.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Front",
+      "id": 14,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://front.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "",
+      "corrected_value": null
+    },
+    {
+      "app": "Front",
+      "id": 14,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://front.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Front",
+      "id": 14,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://front.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Front",
+      "id": 14,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://front.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text from front.com is a marketing homepage for a customer service platform. It contains no information about 'buildability_verdict' or any verdicts/assessments labeled as 'blocked'. The claimed field value is unrelated to the content on the page.",
+      "corrected_value": null
+    },
+    {
+      "app": "Xero",
+      "id": 87,
+      "field": "auth_methods",
+      "agent_claim": [
+        "OAuth2"
+      ],
+      "source": [
+        "https://developer.xero.com"
+      ],
+      "verdict": "CORRECT",
+      "reason": "The page mentions 'client credentials grant type' for custom connections, which is a standard OAuth2 flow, confirming OAuth2 support.",
+      "corrected_value": null
+    },
+    {
+      "app": "Xero",
+      "id": 87,
+      "field": "credential_access",
+      "agent_claim": "self-serve",
+      "source": [
+        "https://developer.xero.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes the Xero developer platform and app partner process but does not specifically address credential access or whether it is self-serve.",
+      "corrected_value": null
+    },
+    {
+      "app": "Xero",
+      "id": 87,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://developer.xero.com",
+        "https://developer.xero.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text discusses Xero's developer platform, APIs, SDKs, and resources but does not specify or mention the API protocols used, so it neither confirms nor denies the claim that api_protocols is unclear.",
+      "corrected_value": null
+    },
+    {
+      "app": "Xero",
+      "id": 87,
+      "field": "buildability_verdict",
+      "agent_claim": "partial",
+      "source": [
+        "https://developer.xero.com",
+        "https://developer.xero.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text from developer.xero.com is a general developer platform landing page with no mention of a 'buildability_verdict' field or any value such as 'partial'. The page discusses building apps, certification requirements, and publishing on the Xero App Store, but does not contain any field or attribute matching the claimed value.",
+      "corrected_value": null
+    },
+    {
+      "app": "Sentry",
+      "id": 70,
+      "field": "auth_methods",
+      "agent_claim": [
+        "API token"
+      ],
+      "source": [
+        "https://docs.sentry.io/api"
+      ],
+      "verdict": "CORRECT",
+      "reason": "The fetched page is the Sentry API Reference documentation, which includes an 'Authentication' section and a tutorial titled 'Create a Sentry Authentication Token', confirming that API tokens are used for authenticating with the Sentry API.",
+      "corrected_value": null
+    },
+    {
+      "app": "Sentry",
+      "id": 70,
+      "field": "credential_access",
+      "agent_claim": "self-serve",
+      "source": [
+        "https://docs.sentry.io/api"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched API documentation page does not contain any information about credential_access or whether it is self-serve. The page is a general overview of Sentry's web API covering authentication, permissions, and API resources, but does not address the specific credential_access field claim.",
+      "corrected_value": null
+    },
+    {
+      "app": "Sentry",
+      "id": 70,
+      "field": "api_protocols",
+      "agent_claim": [
+        "REST"
+      ],
+      "source": [
+        "https://docs.sentry.io/api"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The page text describes the Sentry web API but does not mention the api_protocols field or confirm that it is \"REST\".",
+      "corrected_value": null
+    },
+    {
+      "app": "Sentry",
+      "id": 70,
+      "field": "buildability_verdict",
+      "agent_claim": "ready",
+      "source": [
+        "https://docs.sentry.io/api"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    },
+    {
+      "app": "Intercom",
+      "id": 12,
+      "field": "auth_methods",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://intercom.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text from intercom.com does not mention authentication methods at all, so it neither confirms nor denies the claimed value of [\"unclear\"].",
+      "corrected_value": null
+    },
+    {
+      "app": "Intercom",
+      "id": 12,
+      "field": "credential_access",
+      "agent_claim": "unclear",
+      "source": [
+        "https://intercom.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page text is the Intercom homepage and does not contain any information about credential access capabilities or security features. The claim of 'unclear' cannot be confirmed or denied from this source.",
+      "corrected_value": null
+    },
+    {
+      "app": "Intercom",
+      "id": 12,
+      "field": "api_protocols",
+      "agent_claim": [
+        "unclear"
+      ],
+      "source": [
+        "https://intercom.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "The fetched page is Intercom's marketing homepage and contains no information about API protocols (REST, GraphQL, etc.), so it neither confirms nor denies the claimed value.",
+      "corrected_value": null
+    },
+    {
+      "app": "Intercom",
+      "id": 12,
+      "field": "buildability_verdict",
+      "agent_claim": "blocked",
+      "source": [
+        "https://intercom.com"
+      ],
+      "verdict": "UNVERIFIABLE",
+      "reason": "could not parse fact-checker output",
+      "corrected_value": null
+    }
+  ]
+}

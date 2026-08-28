@@ -1,8 +1,8 @@
 {
   "coverage": {
-    "researched": 67,
+    "researched": 100,
     "of_total": 100,
-    "pct": 67.0
+    "pct": 100.0
   },
   "auth_distribution": {
     "OAuth2 (Connected App)": 1,
@@ -12,50 +12,58 @@
     "OAuth2 (Marketplace apps)": 1,
     "Access token (Bearer, workspace-scoped)": 1,
     "OAuth2 (published integrations / MCP)": 1,
-    "unclear": 44,
-    "API key": 11,
-    "OAuth2": 8,
+    "unclear": 58,
+    "API key": 19,
+    "OAuth2": 18,
     "MTProto": 1,
     "JWT": 1,
-    "API token": 1,
-    "OAuth": 1
+    "API token": 3,
+    "Bearer token": 1,
+    "Personal access token": 1,
+    "OAuth": 1,
+    "API Key + Secret": 1,
+    "API Key": 1,
+    "User ID / User API Key": 1,
+    "Authentication token": 1
   },
   "credential_access": {
     "self-serve": {
-      "count": 16,
-      "pct": 23.9
+      "count": 31,
+      "pct": 31.0
     },
     "gated": {
-      "count": 5,
-      "pct": 7.5
+      "count": 7,
+      "pct": 7.0
     },
     "unclear": {
-      "count": 46,
-      "pct": 68.7
+      "count": 62,
+      "pct": 62.0
     }
   },
   "api_protocols": {
     "REST+SOAP": 1,
-    "REST": 22,
-    "unclear": 41,
-    "GraphQL": 1,
-    "GraphQL+REST": 2
+    "REST": 38,
+    "unclear": 53,
+    "GraphQL": 3,
+    "GraphQL+REST": 3,
+    "Bolt protocol+HTTP/REST": 1,
+    "REST+WebSocket": 1
   },
   "composio_toolkit_exists": {
-    "unknown": 67
+    "unknown": 100
   },
   "buildability": {
     "ready": {
-      "count": 19,
-      "pct": 28.4
+      "count": 32,
+      "pct": 32.0
     },
     "blocked": {
-      "count": 32,
-      "pct": 47.8
+      "count": 42,
+      "pct": 42.0
     },
     "partial": {
-      "count": 16,
-      "pct": 23.9
+      "count": 26,
+      "pct": 26.0
     }
   },
   "top_blockers": [
@@ -101,9 +109,9 @@
     ]
   ],
   "confidence_distribution": {
-    "high": 23,
-    "low": 24,
-    "medium": 20
+    "high": 36,
+    "low": 30,
+    "medium": 34
   },
   "category_analysis": {
     "CRM and Sales": {
@@ -122,7 +130,7 @@
       "ready_pct": 50.0
     },
     "Marketing, Ads, Email and Social": {
-      "n": 9,
+      "n": 10,
       "gated_pct": 0.0,
       "ready_pct": 0.0
     },
@@ -137,29 +145,29 @@
       "ready_pct": 50.0
     },
     "DevTools and Infra": {
-      "n": 2,
+      "n": 10,
       "gated_pct": 0.0,
-      "ready_pct": 0.0
+      "ready_pct": 40.0
     },
     "Productivity": {
-      "n": 2,
+      "n": 10,
       "gated_pct": 0.0,
-      "ready_pct": 50.0
+      "ready_pct": 40.0
     },
     "Finance and Payments": {
-      "n": 2,
-      "gated_pct": 0.0,
-      "ready_pct": 0.0
+      "n": 10,
+      "gated_pct": 20.0,
+      "ready_pct": 40.0
     },
     "AI, Research and Media-native": {
-      "n": 2,
+      "n": 10,
       "gated_pct": 0.0,
-      "ready_pct": 50.0
+      "ready_pct": 30.0
     }
   },
   "key_findings": [
     "E-commerce has the highest gated-credential rate among categories with 5+ researched apps (20.0%), vs. Support at 0.0%.",
-    "unclear is the most common auth method so far (44/67 apps).",
-    "23.9% self-serve vs. 7.5% gated so far."
+    "unclear is the most common auth method so far (58/100 apps).",
+    "31.0% self-serve vs. 7.0% gated so far."
   ]
 }

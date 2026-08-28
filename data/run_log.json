@@ -1,0 +1,1276 @@
+[
+  {
+    "id": 5,
+    "app": "Twenty",
+    "status": "failed",
+    "attempts": 3,
+    "seconds": 49.1
+  },
+  {
+    "id": 6,
+    "app": "Podio",
+    "status": "failed",
+    "attempts": 3,
+    "seconds": 49.2
+  },
+  {
+    "id": 7,
+    "app": "Zoho CRM",
+    "status": "failed",
+    "attempts": 3,
+    "seconds": 80.6
+  },
+  {
+    "id": 5,
+    "app": "Twenty",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 27.6
+  },
+  {
+    "id": 6,
+    "app": "Podio",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 30.6
+  },
+  {
+    "id": 7,
+    "app": "Zoho CRM",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 30.9
+  },
+  {
+    "id": 8,
+    "app": "Close",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 26.4
+  },
+  {
+    "id": 9,
+    "app": "Copper",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 33.1
+  },
+  {
+    "id": 10,
+    "app": "DealCloud",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 29.7
+  },
+  {
+    "id": 5,
+    "app": "Twenty",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 27.5
+  },
+  {
+    "id": 6,
+    "app": "Podio",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 30.5
+  },
+  {
+    "id": 7,
+    "app": "Zoho CRM",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 32.0
+  },
+  {
+    "id": 8,
+    "app": "Close",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 47.7
+  },
+  {
+    "id": 9,
+    "app": "Copper",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 34.0
+  },
+  {
+    "id": 10,
+    "app": "DealCloud",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 32.0
+  },
+  {
+    "id": 11,
+    "app": "Zendesk",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 31.5
+  },
+  {
+    "id": 12,
+    "app": "Intercom",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 36.5
+  },
+  {
+    "id": 5,
+    "app": "Twenty",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 84.6
+  },
+  {
+    "id": 6,
+    "app": "Podio",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 70.8
+  },
+  {
+    "id": 7,
+    "app": "Zoho CRM",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 57.7
+  },
+  {
+    "id": 8,
+    "app": "Close",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 59.0
+  },
+  {
+    "id": 5,
+    "app": "Twenty",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 16.7
+  },
+  {
+    "id": 6,
+    "app": "Podio",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 19.5
+  },
+  {
+    "id": 7,
+    "app": "Zoho CRM",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 13.9
+  },
+  {
+    "id": 8,
+    "app": "Close",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 16.4
+  },
+  {
+    "id": 9,
+    "app": "Copper",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 18.1
+  },
+  {
+    "id": 10,
+    "app": "DealCloud",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 11.8
+  },
+  {
+    "id": 11,
+    "app": "Zendesk",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 45.2
+  },
+  {
+    "id": 12,
+    "app": "Intercom",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 20.9
+  },
+  {
+    "id": 13,
+    "app": "Freshdesk",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 13.2
+  },
+  {
+    "id": 14,
+    "app": "Front",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 17.6
+  },
+  {
+    "id": 15,
+    "app": "Pylon",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.8
+  },
+  {
+    "id": 16,
+    "app": "LiveAgent",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 28.6
+  },
+  {
+    "id": 17,
+    "app": "Plain",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 25.2
+  },
+  {
+    "id": 18,
+    "app": "Help Scout",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 10.5
+  },
+  {
+    "id": 19,
+    "app": "Gorgias",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.8
+  },
+  {
+    "id": 20,
+    "app": "Gladly",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 14.6
+  },
+  {
+    "id": 21,
+    "app": "Slack",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 20.6
+  },
+  {
+    "id": 22,
+    "app": "Twilio",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 17.2
+  },
+  {
+    "id": 23,
+    "app": "Zoho Cliq",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 16.3
+  },
+  {
+    "id": 24,
+    "app": "Lark (Larksuite)",
+    "status": "ok",
+    "attempts": 4,
+    "seconds": 246.6
+  },
+  {
+    "id": 25,
+    "app": "Pumble",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 22.4
+  },
+  {
+    "id": 26,
+    "app": "Discord",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 75.2
+  },
+  {
+    "id": 27,
+    "app": "Telegram",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.1
+  },
+  {
+    "id": 28,
+    "app": "WhatsApp Business",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 9.1
+  },
+  {
+    "id": 29,
+    "app": "Aircall",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.1
+  },
+  {
+    "id": 30,
+    "app": "Vonage",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 20.3
+  },
+  {
+    "id": 31,
+    "app": "Google Ads",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 8.8
+  },
+  {
+    "id": 32,
+    "app": "Meta Ads",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 9.9
+  },
+  {
+    "id": 33,
+    "app": "LinkedIn Ads",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 12.5
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 230.9
+  },
+  {
+    "id": 35,
+    "app": "Mailchimp",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.4
+  },
+  {
+    "id": 36,
+    "app": "Klaviyo",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.3
+  },
+  {
+    "id": 37,
+    "app": "systeme.io",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.4
+  },
+  {
+    "id": 38,
+    "app": "Pinterest",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.0
+  },
+  {
+    "id": 39,
+    "app": "Threads (Meta)",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.7
+  },
+  {
+    "id": 40,
+    "app": "SendGrid",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 6.7
+  },
+  {
+    "id": 41,
+    "app": "Shopify",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 11.9
+  },
+  {
+    "id": 42,
+    "app": "WooCommerce",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 14.9
+  },
+  {
+    "id": 43,
+    "app": "BigCommerce",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 22.3
+  },
+  {
+    "id": 44,
+    "app": "Salesforce Commerce Cloud",
+    "status": "ok",
+    "attempts": 3,
+    "seconds": 135.2
+  },
+  {
+    "id": 45,
+    "app": "Magento (Adobe Commerce)",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 2.9
+  },
+  {
+    "id": 46,
+    "app": "Squarespace",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.1
+  },
+  {
+    "id": 47,
+    "app": "Ecwid",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 7.7
+  },
+  {
+    "id": 48,
+    "app": "Gumroad",
+    "status": "ok",
+    "attempts": 4,
+    "seconds": 115.7
+  },
+  {
+    "id": 49,
+    "app": "Amazon Selling Partner",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 14.8
+  },
+  {
+    "id": 50,
+    "app": "fanbasis",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.1
+  },
+  {
+    "id": 51,
+    "app": "DataForSEO",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.2
+  },
+  {
+    "id": 52,
+    "app": "SE Ranking",
+    "status": "ok",
+    "attempts": 4,
+    "seconds": 144.0
+  },
+  {
+    "id": 53,
+    "app": "Ahrefs",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.8
+  },
+  {
+    "id": 54,
+    "app": "MrScraper",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 13.9
+  },
+  {
+    "id": 55,
+    "app": "Apify",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 9.8
+  },
+  {
+    "id": 56,
+    "app": "Firecrawl",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 28.4
+  },
+  {
+    "id": 57,
+    "app": "Bright Data",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 84.9
+  },
+  {
+    "id": 58,
+    "app": "Sherlock",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.1
+  },
+  {
+    "id": 59,
+    "app": "Waterfall.io",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.8
+  },
+  {
+    "id": 60,
+    "app": "Clay",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 11.0
+  },
+  {
+    "id": 61,
+    "app": "GitHub",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 10.9
+  },
+  {
+    "id": 62,
+    "app": "Vercel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 267.9
+  },
+  {
+    "id": 63,
+    "app": "Netlify",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 268.8
+  },
+  {
+    "id": 64,
+    "app": "Cloudflare",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 290.4
+  },
+  {
+    "id": 65,
+    "app": "Supabase",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 267.8
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 301.6
+  },
+  {
+    "id": 67,
+    "app": "Snowflake",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 5.2
+  },
+  {
+    "id": 68,
+    "app": "MongoDB Atlas",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 278.8
+  },
+  {
+    "id": 69,
+    "app": "Datadog",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 272.0
+  },
+  {
+    "id": 70,
+    "app": "Sentry",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 265.3
+  },
+  {
+    "id": 71,
+    "app": "Notion",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 268.3
+  },
+  {
+    "id": 72,
+    "app": "Airtable",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 8.3
+  },
+  {
+    "id": 73,
+    "app": "Linear",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 271.4
+  },
+  {
+    "id": 74,
+    "app": "Jira",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 267.2
+  },
+  {
+    "id": 75,
+    "app": "Asana",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 265.7
+  },
+  {
+    "id": 76,
+    "app": "Monday.com",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 265.9
+  },
+  {
+    "id": 77,
+    "app": "ClickUp",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.9
+  },
+  {
+    "id": 78,
+    "app": "Coda",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 280.0
+  },
+  {
+    "id": 79,
+    "app": "Smartsheet",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 272.7
+  },
+  {
+    "id": 80,
+    "app": "Harvest",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 272.3
+  },
+  {
+    "id": 81,
+    "app": "Stripe",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 275.1
+  },
+  {
+    "id": 82,
+    "app": "Plaid",
+    "status": "ok",
+    "attempts": 3,
+    "seconds": 166.3
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 282.5
+  },
+  {
+    "id": 84,
+    "app": "Paygent Connect",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 296.6
+  },
+  {
+    "id": 85,
+    "app": "iPayX",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 292.7
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 292.4
+  },
+  {
+    "id": 87,
+    "app": "Xero",
+    "status": "ok",
+    "attempts": 3,
+    "seconds": 141.9
+  },
+  {
+    "id": 88,
+    "app": "Brex",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 264.5
+  },
+  {
+    "id": 89,
+    "app": "Ramp",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 264.1
+  },
+  {
+    "id": 90,
+    "app": "PitchBook",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 276.7
+  },
+  {
+    "id": 91,
+    "app": "NotebookLM",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 270.4
+  },
+  {
+    "id": 92,
+    "app": "Otter AI",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 17.5
+  },
+  {
+    "id": 93,
+    "app": "Fathom",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 273.9
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 280.9
+  },
+  {
+    "id": 95,
+    "app": "Reducto",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 266.6
+  },
+  {
+    "id": 96,
+    "app": "Devin",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 266.9
+  },
+  {
+    "id": 97,
+    "app": "higgsfield",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 264.6
+  },
+  {
+    "id": 98,
+    "app": "Mermaid CLI",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 266.3
+  },
+  {
+    "id": 99,
+    "app": "YouTube Transcript",
+    "status": "ok",
+    "attempts": 4,
+    "seconds": 202.9
+  },
+  {
+    "id": 100,
+    "app": "Grain",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 264.6
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 286.1
+  },
+  {
+    "id": 62,
+    "app": "Vercel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 265.3
+  },
+  {
+    "id": 63,
+    "app": "Netlify",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 91.2
+  },
+  {
+    "id": 64,
+    "app": "Cloudflare",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 288.2
+  },
+  {
+    "id": 65,
+    "app": "Supabase",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 265.5
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 279.3
+  },
+  {
+    "id": 68,
+    "app": "MongoDB Atlas",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 279.0
+  },
+  {
+    "id": 69,
+    "app": "Datadog",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 267.7
+  },
+  {
+    "id": 70,
+    "app": "Sentry",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.3
+  },
+  {
+    "id": 71,
+    "app": "Notion",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 266.4
+  },
+  {
+    "id": 73,
+    "app": "Linear",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 268.3
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 222.7
+  },
+  {
+    "id": 62,
+    "app": "Vercel",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 5.3
+  },
+  {
+    "id": 64,
+    "app": "Cloudflare",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 7.3
+  },
+  {
+    "id": 65,
+    "app": "Supabase",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 21.6
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 78.8
+  },
+  {
+    "id": 68,
+    "app": "MongoDB Atlas",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 6.2
+  },
+  {
+    "id": 69,
+    "app": "Datadog",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.2
+  },
+  {
+    "id": 71,
+    "app": "Notion",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.8
+  },
+  {
+    "id": 73,
+    "app": "Linear",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.1
+  },
+  {
+    "id": 74,
+    "app": "Jira",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 12.9
+  },
+  {
+    "id": 75,
+    "app": "Asana",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.6
+  },
+  {
+    "id": 76,
+    "app": "Monday.com",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 16.6
+  },
+  {
+    "id": 78,
+    "app": "Coda",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 19.3
+  },
+  {
+    "id": 79,
+    "app": "Smartsheet",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 11.6
+  },
+  {
+    "id": 80,
+    "app": "Harvest",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 17.3
+  },
+  {
+    "id": 81,
+    "app": "Stripe",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 19.0
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 150.9
+  },
+  {
+    "id": 84,
+    "app": "Paygent Connect",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 49.0
+  },
+  {
+    "id": 85,
+    "app": "iPayX",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 9.1
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 348.8
+  },
+  {
+    "id": 88,
+    "app": "Brex",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 6.0
+  },
+  {
+    "id": 89,
+    "app": "Ramp",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 3.9
+  },
+  {
+    "id": 90,
+    "app": "PitchBook",
+    "status": "ok",
+    "attempts": 2,
+    "seconds": 37.5
+  },
+  {
+    "id": 91,
+    "app": "NotebookLM",
+    "status": "ok",
+    "attempts": 3,
+    "seconds": 48.1
+  },
+  {
+    "id": 93,
+    "app": "Fathom",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 15.0
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 341.3
+  },
+  {
+    "id": 95,
+    "app": "Reducto",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 6.4
+  },
+  {
+    "id": 96,
+    "app": "Devin",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 4.5
+  },
+  {
+    "id": 97,
+    "app": "higgsfield",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 19.6
+  },
+  {
+    "id": 98,
+    "app": "Mermaid CLI",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 28.2
+  },
+  {
+    "id": 100,
+    "app": "Grain",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 17.6
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 279.2
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 274.9
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 282.6
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 275.6
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 314.8
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 281.3
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 57.5
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 33.0
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 32.9
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 49.0
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 34.8
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 38.2
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 37.3
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 31.3
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 50.9
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 37.0
+  },
+  {
+    "id": 34,
+    "app": "GoHighLevel",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 25.2
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 70.3
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "failed",
+    "attempts": 4,
+    "seconds": 64.7
+  },
+  {
+    "id": 86,
+    "app": "QuickBooks",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 39.2
+  },
+  {
+    "id": 94,
+    "app": "Consensus",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 49.0
+  },
+  {
+    "id": 66,
+    "app": "Neo4j",
+    "status": "ok",
+    "attempts": 4,
+    "seconds": 70.2
+  },
+  {
+    "id": 83,
+    "app": "Binance",
+    "status": "ok",
+    "attempts": 1,
+    "seconds": 41.5
+  }
+]
