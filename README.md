@@ -164,17 +164,21 @@ and it resumes.
 
 ## Viewing the dashboard
 
-`docs/index.html` reads `data/results.json` and `data/patterns.json` via
-`fetch()`, which browsers block on a plain `file://` path. Two ways to view it:
+`docs/index.html` fetches `data/*.json` directly from GitHub's raw content
+CDN (`raw.githubusercontent.com/.../main/data/...`), not from a relative
+path — this is deliberate, since GitHub Pages only publishes the `/docs`
+folder, so a relative `../data/...` path 404s once deployed even though it
+works fine when testing locally with a full repo checkout. Because it fetches
+from `main` directly, the live dashboard always reflects whatever is
+currently pushed, with no separate build/deploy step for data changes.
 
-```bash
-# from the repo root
-python -m http.server 8000
-# then open http://localhost:8000/docs/index.html
-```
+**Live version:** enable GitHub Pages once (Settings → Pages → source:
+`main` branch, folder `/docs`) → `https://<username>.github.io/<repo>/`.
 
-Or enable **GitHub Pages** (Settings → Pages → source: `main` branch, folder
-`/docs`) for a public link that works the same way automatically.
+**Local testing:** just open `docs/index.html` directly in a browser (no
+local server needed) — it fetches the same raw GitHub URLs either way, so
+local and deployed behave identically. (Requires the repo to be pushed to
+GitHub already, since it reads from there, not from local disk.)
 
 ## Repo structure
 
