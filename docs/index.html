@@ -209,7 +209,7 @@ async function load() {
     <div class="stat-card"><div class="num">${access['gated']||0}</div><div class="label">gated (of ${done})</div></div>
     <div class="stat-card"><div class="num">${verdicts['ready']||0}</div><div class="label">buildable today</div></div>
     <div class="stat-card"><div class="num">${toolkitExists}</div><div class="label">already have a Composio toolkit</div></div>
-    <div class="stat-card"><div class="num">${(verification.summary && verification.summary.final_accuracy_pct) || (verification.summary && verification.summary.initial_accuracy_pct) || '—'}${verification.summary ? '%' : ''}</div><div class="label">verification accuracy</div></div>
+    <div class="stat-card"><div class="num">${verification.summary && verification.summary.error_rate_pct != null ? verification.summary.error_rate_pct + '%' : '—'}</div><div class="label">error rate (of checkable claims)</div></div>
   `;
 
   document.getElementById('findings-count').textContent = `(${done} of ${total})`;
@@ -249,8 +249,11 @@ async function load() {
   document.getElementById('verification-summary').innerHTML = vsum
     ? `Sampled <b>${vsum.sample_size}</b>/${done} apps (${vsum.sample_pct_of_total}%, seed=${vsum.seed}) · ${vsum.fields_checked} fields checked · ` +
       `<b>${vsum.correct}</b> correct, <b>${vsum.incorrect}</b> incorrect, <b>${vsum.unverifiable}</b> unverifiable · ` +
-      `Initial accuracy: <b>${vsum.initial_accuracy_pct}%</b>` +
-      (vsum.corrections_applied ? ` · ${vsum.corrections_applied} corrections applied · Final accuracy: <b>${vsum.final_accuracy_pct}%</b>` : ' · run with --apply-corrections to fix and re-measure')
+      (vsum.error_rate_pct != null
+        ? `Of the ${vsum.correct + vsum.incorrect} claims the verifier could actually confirm or deny, <b>${vsum.error_rate_pct}%</b> were wrong. ` +
+          `The rest were unverifiable because the cited source page didn't contain enough detail to confirm the claim either way \u2014 not because the claim was wrong.`
+        : `No claims could be independently confirmed or denied from the re-fetched sources.`) +
+      (vsum.corrections_applied ? ` · ${vsum.corrections_applied} correction(s) applied to results.json` : '')
     : 'No verification run yet — run scripts/verify_sample.py.';
 
   document.getElementById('human-note').innerHTML = done < total

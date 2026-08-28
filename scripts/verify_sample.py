@@ -204,6 +204,12 @@ def main():
 
     total = correct + incorrect + unverifiable
     initial_accuracy = round(100 * correct / total, 1) if total else 0.0
+    # "accuracy" (correct/total) conflates UNVERIFIABLE with wrong, which is misleading --
+    # a field where the cited source just didn't say enough to confirm either way is not
+    # the same as a field we know is wrong. error_rate is the fairer honesty metric: of
+    # the claims we could actually check, how many were flat-out incorrect.
+    checkable = correct + incorrect
+    error_rate = round(100 * incorrect / checkable, 1) if checkable else None
 
     corrections_applied = 0
     if args.apply_corrections:
@@ -223,6 +229,8 @@ def main():
         "seed": args.seed, "fields_checked": total,
         "correct": correct, "incorrect": incorrect, "unverifiable": unverifiable,
         "initial_accuracy_pct": initial_accuracy,
+        "error_rate_pct": error_rate,
+        "error_rate_note": "of claims the verifier could actually confirm or deny (excludes UNVERIFIABLE), the percent found incorrect",
         "corrections_applied": corrections_applied,
         "final_accuracy_pct": final_accuracy if args.apply_corrections else None,
     }
@@ -230,6 +238,9 @@ def main():
 
     print(f"\nSampled {len(sample)}/{len(results)} apps ({summary['sample_pct_of_total']}%), seed={args.seed}")
     print(f"Fields checked: {total} | correct: {correct} | incorrect: {incorrect} | unverifiable: {unverifiable}")
+    print(f"Of the {checkable} claims that could actually be confirmed either way: "
+          f"{error_rate}% were wrong ({incorrect}/{checkable})" if checkable else
+          "No claims could be independently confirmed or denied from the re-fetched sources.")
     print(f"Initial accuracy: {initial_accuracy}%")
     if args.apply_corrections:
         print(f"Corrections applied: {corrections_applied} | Final accuracy: {final_accuracy}%")
