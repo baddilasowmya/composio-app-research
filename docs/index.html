@@ -174,19 +174,27 @@ function bar(container, rows, warnIf) {
 }
 
 async function load() {
+  // GitHub Pages only publishes the /docs folder, so a relative '../data/...'
+  // path (which works fine for local testing via `python -m http.server`
+  // from the repo root) resolves outside what's actually published and
+  // 404s there. Fetching the raw file content from GitHub directly works
+  // in both places -- locally and once deployed -- and always reflects
+  // whatever is currently pushed to main.
+  const RAW_BASE = 'https://raw.githubusercontent.com/baddilasowmya/composio-app-research/main/data/';
+
   let apps = [], results = [], patterns = {}, verification = {};
   try {
     [apps, results] = await Promise.all([
-      fetch('../data/apps.json').then(r => r.json()),
-      fetch('../data/results.json').then(r => r.json())
+      fetch(RAW_BASE + 'apps.json').then(r => r.json()),
+      fetch(RAW_BASE + 'results.json').then(r => r.json())
     ]);
   } catch (e) {
     document.getElementById('coverage-banner').textContent =
-      'Could not load data files — serve this via a static server (not file://) so fetch() can reach ../data/*.json.';
+      'Could not load data files from GitHub — check that data/apps.json and data/results.json are pushed to the main branch.';
     return;
   }
-  try { patterns = await fetch('../data/patterns.json').then(r => r.json()); } catch(e) { patterns = {}; }
-  try { verification = await fetch('../data/verification.json').then(r => r.json()); } catch(e) { verification = {}; }
+  try { patterns = await fetch(RAW_BASE + 'patterns.json').then(r => r.json()); } catch(e) { patterns = {}; }
+  try { verification = await fetch(RAW_BASE + 'verification.json').then(r => r.json()); } catch(e) { verification = {}; }
 
   const total = apps.length, done = results.length, pct = Math.round(100 * done / total);
   const banner = document.getElementById('coverage-banner');
@@ -209,7 +217,7 @@ async function load() {
     <div class="stat-card"><div class="num">${access['gated']||0}</div><div class="label">gated (of ${done})</div></div>
     <div class="stat-card"><div class="num">${verdicts['ready']||0}</div><div class="label">buildable today</div></div>
     <div class="stat-card"><div class="num">${toolkitExists}</div><div class="label">already have a Composio toolkit</div></div>
-    <div class="stat-card"><div class="num">${(verification.summary && verification.summary.final_accuracy_pct) || (verification.summary && verification.summary.initial_accuracy_pct) || '—'}${verification.summary ? '%' : ''}</div><div class="label">verification accuracy</div></div>
+    <div class="stat-card"><div class="num">${verification.summary && verification.summary.error_rate_pct != null ? verification.summary.error_rate_pct + '%' : '—'}</div><div class="label">error rate (of checkable claims)</div></div>
   `;
 
   document.getElementById('findings-count').textContent = `(${done} of ${total})`;
@@ -249,8 +257,11 @@ async function load() {
   document.getElementById('verification-summary').innerHTML = vsum
     ? `Sampled <b>${vsum.sample_size}</b>/${done} apps (${vsum.sample_pct_of_total}%, seed=${vsum.seed}) · ${vsum.fields_checked} fields checked · ` +
       `<b>${vsum.correct}</b> correct, <b>${vsum.incorrect}</b> incorrect, <b>${vsum.unverifiable}</b> unverifiable · ` +
-      `Initial accuracy: <b>${vsum.initial_accuracy_pct}%</b>` +
-      (vsum.corrections_applied ? ` · ${vsum.corrections_applied} corrections applied · Final accuracy: <b>${vsum.final_accuracy_pct}%</b>` : ' · run with --apply-corrections to fix and re-measure')
+      (vsum.error_rate_pct != null
+        ? `Of the ${vsum.correct + vsum.incorrect} claims the verifier could actually confirm or deny, <b>${vsum.error_rate_pct}%</b> were wrong. ` +
+          `The rest were unverifiable because the cited source page didn't contain enough detail to confirm the claim either way \u2014 not because the claim was wrong.`
+        : `No claims could be independently confirmed or denied from the re-fetched sources.`) +
+      (vsum.corrections_applied ? ` · ${vsum.corrections_applied} correction(s) applied to results.json` : '')
     : 'No verification run yet — run scripts/verify_sample.py.';
 
   document.getElementById('human-note').innerHTML = done < total
